@@ -15,4 +15,4 @@ jobs:
         python-version: '3.9'
     - run: pip install notebook requests bs4
     - name: Run scraper
-      run: jupyter execute scrape.ipynb
+      run: jupyter execute world_temperature.ipynb
