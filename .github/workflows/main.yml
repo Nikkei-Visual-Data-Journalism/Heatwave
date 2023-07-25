@@ -1,18 +1,26 @@
 name: Scrape
-
 on:
   schedule:
-    - cron: "0 8 * * *" # 8 a.m. every day UTC
-  workflow_dispatch:
+    - cron: '0 0 * * *' # これは毎日UTCの午前0時（協定世界時）に実行されます。
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
+    - name: Checkout repository content
+      uses: actions/checkout@v2 # GitHubアクションでリポジトリの内容をチェックアウト（取得）するステップ。
+
+    - name: Set up Python
+      uses: actions/setup-python@v2 # Pythonをセットアップするステップ。
       with:
-        python-version: '3.9'
-    - run: pip install notebook requests bs4
+        python-version: '3.x' # ここで使用するPythonのバージョンを指定します。
+
+    - name: Install dependencies
+      run: |
+        pip install pandas
+        pip install beautifulsoup4
+        # 他に必要なパッケージがあれば、ここに追加します。
+
     - name: Run scraper
-      run: jupyter execute world_temperature (2).ipynb
+      run: python world_temperature.ipynb # スクレイピング用のPythonスクリプトを実行するステップ。
