@@ -2238,7 +2238,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 472,
+   "execution_count": 483,
    "id": "ca266dd2-322c-409f-a0e0-7fbfc94c115f",
    "metadata": {},
    "outputs": [],
@@ -2740,7 +2740,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 480,
+   "execution_count": 484,
    "id": "e793e91a-1d12-4db2-b689-9af3782aab39",
    "metadata": {},
    "outputs": [
@@ -2772,7 +2772,7 @@
     "# plt.savefig('output_data/真夏日_1964_2023_untill_resent_data.png')\n",
     "\n",
     "# 保存\n",
-    "ex_data_30.to_csv('flourish_data/真夏日_1964_2023_Jly1_to_latest_bar.csv')"
+    "ex_data_30.to_csv('flourish_data/東京_真夏日_1964_2023_Jly1_to_latest_bar.csv')"
    ]
   },
   {
@@ -2785,7 +2785,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 481,
+   "execution_count": 485,
    "id": "5c8939a1-fec5-4478-8b76-bd2048f3f192",
    "metadata": {},
    "outputs": [
@@ -2818,7 +2818,7 @@
     "# plt.savefig('output_data/猛暑日_1964_2023_untill_resent_data.png')\n",
     "\n",
     "# 保存\n",
-    "ex_data_30.to_csv('flourish_data/猛暑日_1964_2023_Jly1_to_latest_bar.csv')"
+    "ex_data_30.to_csv('flourish_data/東京_猛暑日_1964_2023_Jly1_to_latest_bar.csv')"
    ]
   },
   {
