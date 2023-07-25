@@ -2740,7 +2740,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 484,
+   "execution_count": 487,
    "id": "e793e91a-1d12-4db2-b689-9af3782aab39",
    "metadata": {},
    "outputs": [
@@ -2758,11 +2758,11 @@
    "source": [
     "# 年ごとの真夏日の数\n",
     "ex_data_30 = ex_data[ex_data['max'] >= 30]\n",
-    "year_counts = ex_data_30['year'].value_counts() #年ごとの真夏日の数をカウント\n",
-    "sorted_years = sorted(year_counts.index)  # 年を昇順にソート\n",
+    "year_counts_30 = ex_data_30['year'].value_counts() #年ごとの真夏日の数をカウント\n",
+    "sorted_years = sorted(year_counts_30.index)  # 年を昇順にソート\n",
     "\n",
     "plt.figure(figsize=(6, 4))\n",
-    "plt.bar(sorted_years, year_counts[sorted_years])\n",
+    "plt.bar(sorted_years, year_counts_30[sorted_years])\n",
     "plt.xticks(rotation=45, ha='right')  # x軸のラベルを斜めに表示\n",
     "plt.title('東京　6/1以降の真夏日の数')\n",
     "plt.xlabel('')\n",
@@ -2772,7 +2772,7 @@
     "# plt.savefig('output_data/真夏日_1964_2023_untill_resent_data.png')\n",
     "\n",
     "# 保存\n",
-    "ex_data_30.to_csv('flourish_data/東京_真夏日_1964_2023_Jly1_to_latest_bar.csv')"
+    "year_counts_30.to_csv('flourish_data/東京_真夏日_1964_2023_Jly1_to_latest_bar.csv')"
    ]
   },
   {
@@ -2785,7 +2785,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 485,
+   "execution_count": 488,
    "id": "5c8939a1-fec5-4478-8b76-bd2048f3f192",
    "metadata": {},
    "outputs": [
@@ -2803,11 +2803,11 @@
    "source": [
     "# 年ごとの猛暑日の数\n",
     "ex_data_35 = ex_data[ex_data['max'] >= 35]\n",
-    "year_counts = ex_data_35['year'].value_counts()\n",
-    "sorted_years = sorted(year_counts.index)  # 年を昇順にソート\n",
+    "year_counts_35 = ex_data_35['year'].value_counts()\n",
+    "sorted_years = sorted(year_counts_35.index)  # 年を昇順にソート\n",
     "\n",
     "plt.figure(figsize=(6, 4))\n",
-    "plt.bar(sorted_years, year_counts[sorted_years])\n",
+    "plt.bar(sorted_years, year_counts_35[sorted_years])\n",
     "plt.xticks(rotation= 45, ha='right')  # x軸のラベルを斜めに表示\n",
     "plt.title('東京　6/1以降の猛暑日の数')\n",
     "plt.xlabel('')\n",
@@ -2818,7 +2818,7 @@
     "# plt.savefig('output_data/猛暑日_1964_2023_untill_resent_data.png')\n",
     "\n",
     "# 保存\n",
-    "ex_data_30.to_csv('flourish_data/東京_猛暑日_1964_2023_Jly1_to_latest_bar.csv')"
+    "year_counts_35.to_csv('flourish_data/東京_猛暑日_1964_2023_Jly1_to_latest_bar.csv')"
    ]
   },
   {
