@@ -14,5 +14,5 @@
 　＊10月に入るとデータ欠損でエラーになる
 
 
-▼world_temperature.ipynb（桜木）
+▼world_temperature.py（桜木）
 世界の平均気温データ入手
