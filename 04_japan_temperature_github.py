@@ -2227,14 +2227,50 @@
   },
   {
    "cell_type": "code",
+   "execution_count": null,
+   "id": "18973336-392e-4f9e-84e8-1ff00c2ed346",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# flourish用に日付データを作成\n",
+    "data['date'] = pd.to_datetime(new_data['date'])\n",
+    "data['month_day_flourish'] = data['date'].dt.strftime('%m-%d')"
+   ]
+  },
+  {
+   "cell_type": "code",
    "execution_count": 431,
    "id": "ca266dd2-322c-409f-a0e0-7fbfc94c115f",
    "metadata": {},
    "outputs": [],
    "source": [
-    "# 自動取得用に保存\n",
+    "# flourish用に保存\n",
     "data.to_csv('flourish_data/最高気温_1964_2022_all_2023_latest.csv')"
    ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ef54fdcd-6cf3-48b5-a487-2e4ebed7e83a",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "04ba6a0b-160a-492d-ad3b-7fad021b9e29",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "eeb5bf2d-a2fb-4c4c-9b39-a22186b4e61d",
+   "metadata": {},
+   "outputs": [],
+   "source": []
   },
   {
    "cell_type": "markdown",
@@ -2272,8 +2308,8 @@
     "plt.xlabel('')\n",
     "plt.ylabel('')\n",
     "\n",
-    "# 保存\n",
-    "max_temp.to_csv('flourish_data/最高気温_1964_2022_all_2023_latest_heatmap.csv')\n",
+    "# # 保存\n",
+    "# max_temp.to_csv('flourish_data/最高気温_1964_2022_all_2023_latest_heatmap.csv')\n",
     "\n",
     "# 保存\n",
     "# plt.savefig('output_data/最高気温_1964_2023.jpg')"
@@ -2313,7 +2349,7 @@
     "plt.ylabel('年')\n",
     "\n",
     "# 保存\n",
-    "max_temp.to_csv('flourish_data/猛暑日_1964_2022_all_2023_latest_heatmap.csv')\n"
+    "# max_temp.to_csv('flourish_data/猛暑日_1964_2022_all_2023_latest_heatmap.csv')\n"
    ]
   },
   {
@@ -2348,7 +2384,7 @@
     "# 保存\n",
     "# plt.savefig('output_data/真夏日_1964_2023_heatmap.jpg')\n",
     "\n",
-    "max_temp.to_csv('flourish_data/真夏日_1964_2022_all_2023_latest_heatmap.csv')"
+    "# max_temp.to_csv('flourish_data/真夏日_1964_2022_all_2023_latest_heatmap.csv')"
    ]
   },
   {
