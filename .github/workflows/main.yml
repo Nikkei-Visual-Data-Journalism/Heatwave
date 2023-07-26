@@ -27,8 +27,6 @@ jobs:
       # MAKE SURE YOUR SCRAPER FILENAME MATCHES THE FILENAME HERE!!
       - name: Run the scraping script
         run: python world_temperature.py
-      - name: Run the scraping script
-        run: hot_weather.py  
         
       - name: Add and commit	
         run: |
