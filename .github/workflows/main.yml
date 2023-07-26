@@ -28,7 +28,7 @@ jobs:
       - name: Run the scraping script
         run: python world_temperature.py
       - name: Run the scraping script
-        run: heat_wave.py  
+        run: hot_weather.py  
         
       - name: Add and commit	
         run: |
