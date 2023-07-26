@@ -25,8 +25,11 @@ jobs:
       - name: Install necessary Python packages
         run: pip install pandas beautifulsoup4 requests
       # MAKE SURE YOUR SCRAPER FILENAME MATCHES THE FILENAME HERE!!
-      - name: Run the scraping script
+      - name: Run world_temperature script
         run: python world_temperature.py
+        
+      - name: Run hot_weather script
+        run: python hot_weather.py        
         
       - name: Add and commit	
         run: |
