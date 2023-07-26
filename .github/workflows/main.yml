@@ -10,18 +10,18 @@ jobs:
 
     steps:
     - name: Checkout repository content
-      uses: actions/checkout@v2 # GitHubアクションでリポジトリの内容をチェックアウト（取得）するステップ。
+      uses: actions/checkout@v2
 
     - name: Set up Python
-      uses: actions/setup-python@v2 # Pythonをセットアップするステップ。
+      uses: actions/setup-python@v2
       with:
-        python-version: '3.9' # ここで使用するPythonのバージョンを指定します。
+        python-version: '3.9'
 
     - name: Install dependencies
       run: |
         pip install pandas
         pip install beautifulsoup4
-        # 他に必要なパッケージがあれば、ここに追加します。
+        pip install jupyter nbconvert
 
     - name: Run scraper
-      run: world_temperature_(4)_ipynb_のコピー.ipynb # スクレイピング用のPythonスクリプトを実行するステップ。
+      run: world_temperature_(4)_ipynb_のコピー.ipynb
