@@ -1,26 +1,29 @@
-name: Scrape
-on:
-  schedule:
-    - cron: '0 0 * * *' 
-  workflow_dispatch:
+# Call this whatever you want
+name: scrape
 
+# When does it get run?
+on:
+  # workflow_dispatch means "I can click a button and force it to run"
+  workflow_dispatch:
+  # schedule/cron means "on a set schedule"
+  schedule:
+    - cron: '0 2 * * *'
 jobs:
   scrape:
+    # For some reason, we run love versions of linux
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository content
-      uses: actions/checkout@v2
-
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.9'
-
-    - name: Install dependencies
-      run: |
-        pip install pandas
-        pip install beautifulsoup4
-
-    - name: Run scraper
-      run: world_temperature.py
+      # Download all of the code from your repo
+      - name: Check out this repo
+        uses: actions/checkout@v2
+      # Set up Python 3.9
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      #
+      - name: Install necessary Python packages
+        run: pip install pandas beautifulsoup4 requests
+      # MAKE SURE YOUR SCRAPER FILENAME MATCHES THE FILENAME HERE!!
+      - name: Run the scraping script
+        run: python world_temperature.py
