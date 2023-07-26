@@ -8,8 +8,6 @@ Original file is located at
 """
 
 
-!pip install tabula-py
-!pip install requests
 
 
 import tabula
