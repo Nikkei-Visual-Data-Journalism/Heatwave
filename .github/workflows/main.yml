@@ -24,4 +24,4 @@ jobs:
         pip install jupyter nbconvert
 
     - name: Run scraper
-      run: world_temperature_(4)_ipynb_のコピー.ipynb
+      run: world_temperature.ipynb
