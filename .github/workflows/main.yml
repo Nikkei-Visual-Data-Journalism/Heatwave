@@ -24,4 +24,4 @@ jobs:
         # 他に必要なパッケージがあれば、ここに追加します。
 
     - name: Run scraper
-      run: python world_temperature.ipynb # スクレイピング用のPythonスクリプトを実行するステップ。
+      run: world_temperature_(4)_ipynb_のコピー.ipynb # スクレイピング用のPythonスクリプトを実行するステップ。
