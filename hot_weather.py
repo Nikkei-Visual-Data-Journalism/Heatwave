@@ -7,8 +7,10 @@ Original file is located at
     https://colab.research.google.com/drive/1Lvt9DhlgRycPVlUkrZvHkQrd2e2sWfKA
 """
 
+!java -version
 
-
+!pip install tabula-py
+!pip install requests
 
 
 import tabula
