@@ -1,7 +1,7 @@
 # Heatwave
 猛暑ビジュアライゼーション
 
-▼02summerday_point_num.py（有年）
+▼02summerday_point_num_github.py（有年）
 日本　　📈猛暑日観測地点のグラフ用コード
 
 ▼04_japan_temperature_github.py（有年）
