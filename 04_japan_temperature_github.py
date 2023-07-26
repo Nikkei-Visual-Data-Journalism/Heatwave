@@ -1976,7 +1976,7 @@
    ],
    "source": [
     "# 過去データ読み込み\n",
-    "past_data = pd.read_csv('github_data/1964_2022_all_202306only.csv')\n",
+    "past_data = pd.read_csv('Heatwave/1964_2022_all_202306only.csv')\n",
     "past_data"
    ]
   },
@@ -2244,7 +2244,7 @@
    "outputs": [],
    "source": [
     "# flourish用に保存\n",
-    "data.to_csv('flourish_data/最高気温_1964_2022_all_2023_latest.csv')"
+    "data.to_csv('Heatwave/data//最高気温_1964_2022_all_2023_latest.csv')"
    ]
   },
   {
@@ -2631,7 +2631,7 @@
     }
    ],
    "source": [
-    "# 6/1~今日までのデータを抽出\n",
+    "# 6/1~前日までのデータを抽出\n",
     "\n",
     "# 6月よりあとの月かつmonth未満の場合、対応するday列（その月の最小値から最大値の範囲）を全て取得\n",
     "condition1 = data['month'].between(6, today_month - 1) & data['day'].between(data['day'].min(), data['day'].max())\n",
@@ -2771,8 +2771,8 @@
     "# 保存\n",
     "# plt.savefig('output_data/真夏日_1964_2023_untill_resent_data.png')\n",
     "\n",
-    "# 保存\n",
-    "year_counts_30.to_csv('flourish_data/東京_真夏日_1964_2023_Jly1_to_latest_bar.csv')"
+    "# flourish用に保存\n",
+    "year_counts_30.to_csv('Heatwave/data/東京_真夏日_1964_2023_Jly1_to_latest_bar.csv')"
    ]
   },
   {
@@ -2817,52 +2817,8 @@
     "# 保存\n",
     "# plt.savefig('output_data/猛暑日_1964_2023_untill_resent_data.png')\n",
     "\n",
-    "# 保存\n",
-    "year_counts_35.to_csv('flourish_data/東京_猛暑日_1964_2023_Jly1_to_latest_bar.csv')"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 482,
-   "id": "7b3ee224-377a-4204-9370-f09c419d9e47",
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "year\n",
-       "2022    9\n",
-       "2023    7\n",
-       "2001    7\n",
-       "2013    6\n",
-       "2018    5\n",
-       "2010    4\n",
-       "2004    4\n",
-       "1994    3\n",
-       "1997    3\n",
-       "2016    2\n",
-       "2006    2\n",
-       "1987    2\n",
-       "1998    2\n",
-       "1991    2\n",
-       "2011    1\n",
-       "2012    1\n",
-       "2005    1\n",
-       "2014    1\n",
-       "2017    1\n",
-       "1995    1\n",
-       "1975    1\n",
-       "Name: count, dtype: int64"
-      ]
-     },
-     "execution_count": 482,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "# 猛暑日のランキング\n",
-    "ex_data_35['year'].value_counts()"
+    "# flourish用に保存\n",
+    "year_counts_35.to_csv('Heatwave/data/東京_猛暑日_1964_2023_Jly1_to_latest_bar.csv')"
    ]
   },
   {
