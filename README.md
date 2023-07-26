@@ -16,3 +16,8 @@
 
 ▼world_temperature.py（桜木）
 世界の平均気温データ入手
+
+▼hot_weather.py(田中)
+救急搬送者数のデータ入手コード
+
+▼
