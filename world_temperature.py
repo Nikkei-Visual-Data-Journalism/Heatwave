@@ -129,7 +129,7 @@ df_without_229 = df_without_229[['temp', 'year', 'date']]
 # In[59]:
 
 
-df_without_229.to_csv("world_temperature.csv")
+df_without_229.to_csv("world_temperature.csv", index = False)
 
 
 # In[ ]:
