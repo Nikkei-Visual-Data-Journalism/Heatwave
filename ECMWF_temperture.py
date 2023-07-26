@@ -140,7 +140,7 @@ fig.coastlines(resolution="medium")
 fig.legend()
 #fig.footer("© European Centre for Medium-Range Weather Forecasts (ECMWF) Source: www.ecmwf.int Licence: CC-BY-4.0 and ECMWF Terms of Use (https://apps.ecmwf.int/datasets/licences/general/)", logo='ecmwf')
 
-fig.show()
+fig.save('ECMWF_temperture.png')
 
 """Note that plot produced using open data dataset will slightly differ from one from Open Charts. This is due to different resolution of the data.  
 Open data is on 0.4x0.4 resolution, while high resolution data is 0.1x0.1 grid.
