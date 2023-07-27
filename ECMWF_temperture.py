@@ -76,7 +76,7 @@ fig.contour_shaded(t850, style="temperature_rainbow_3")
 fig.coastlines(resolution="medium")
 #fig.gridlines()
 
-#fig.title(["<grib_info key='valid-date' format='%Y-%m-%d' where='shortName=t'/>　"])
+fig.title(["<grib_info key='valid-date' format='%Y-%m-%d' where='shortName=t'/>　"])
 fig.legend()
 fig.footer()
 
