@@ -190,5 +190,5 @@ ex_data_35 = ex_data[ex_data['max'] >= 35]
 year_counts_35 = ex_data_35['year'].value_counts()
 
 # flourish用に保存
-year_counts_35.to_csv('Heatwave/data/tokyo_over35_count.csv')
+year_counts_35.to_csv('tokyo_over35_count.csv')
 
