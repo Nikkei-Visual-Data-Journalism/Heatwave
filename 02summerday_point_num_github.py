@@ -5,7 +5,7 @@
    "id": "15c04227-8304-40ef-9381-9db155a1aa96",
    "metadata": {},
    "source": [
-    "# 真夏日と猛暑日の地点数（全国）\n",
+    "# 真夏日と猛暑日の地点数（全国）のデータの取得コード\n",
     "気象庁の「真夏日などの地点数（昨日まで）」のデータ\n",
     "https://www.data.jma.go.jp/obd/stats/etrn/view/summer.php?"
    ]
@@ -18,12 +18,6 @@
    "outputs": [],
    "source": [
     "import pandas as pd\n",
-    "import numpy as np\n",
-    "import matplotlib.pyplot as plt\n",
-    "import matplotlib.colors as mcolors\n",
-    "import japanize_matplotlib\n",
-    "import seaborn as sns\n",
-    "import requests\n",
     "from datetime import datetime"
    ]
   },
