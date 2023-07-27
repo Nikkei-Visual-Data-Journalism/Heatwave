@@ -1,461 +1,81 @@
-{
- "cells": [
-  {
-   "cell_type": "markdown",
-   "id": "15c04227-8304-40ef-9381-9db155a1aa96",
-   "metadata": {},
-   "source": [
-    "# 真夏日と猛暑日の地点数（全国）の取得コード\n",
-    "気象庁の「真夏日などの地点数（昨日まで）」のデータ\n",
-    "https://www.data.jma.go.jp/obd/stats/etrn/view/summer.php?\n",
-    "- 出力データは'flourish_全国_真夏日_猛暑日の地点数.csv'"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 1,
-   "id": "e10aefb2-8b5d-428b-a6f8-eaa5f03599b4",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "import pandas as pd\n",
-    "from datetime import datetime"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 2,
-   "id": "e9f7606e-1d3e-46d5-a32c-6ca1a394dd2c",
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "7"
-      ]
-     },
-     "execution_count": 2,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "# 現在の月を取得\n",
-    "month = datetime.today().month"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 3,
-   "id": "763661e5-a231-4fa2-8a31-cab0bb8f6ee0",
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "https://www.data.jma.go.jp/obd/stats/etrn/view/summer.php?month=5\n",
-      "https://www.data.jma.go.jp/obd/stats/etrn/view/summer.php?month=6\n",
-      "https://www.data.jma.go.jp/obd/stats/etrn/view/summer.php?month=7\n"
-     ]
-    },
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead tr th {\n",
-       "        text-align: left;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr>\n",
-       "      <th></th>\n",
-       "      <th>日</th>\n",
-       "      <th colspan=\"2\" halign=\"left\">日最高気温</th>\n",
-       "      <th>month</th>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th></th>\n",
-       "      <th>日</th>\n",
-       "      <th>30℃以上 （真夏日）</th>\n",
-       "      <th>35℃以上 （猛暑日）</th>\n",
-       "      <th></th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "    <tr>\n",
-       "      <th>0</th>\n",
-       "      <td>1</td>\n",
-       "      <td>0</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>1</th>\n",
-       "      <td>2</td>\n",
-       "      <td>0</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2</th>\n",
-       "      <td>3</td>\n",
-       "      <td>0</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>3</th>\n",
-       "      <td>4</td>\n",
-       "      <td>1</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>4</th>\n",
-       "      <td>5</td>\n",
-       "      <td>11</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>5</th>\n",
-       "      <td>6</td>\n",
-       "      <td>19</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>6</th>\n",
-       "      <td>7</td>\n",
-       "      <td>4</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>7</th>\n",
-       "      <td>8</td>\n",
-       "      <td>0</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>8</th>\n",
-       "      <td>9</td>\n",
-       "      <td>0</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>9</th>\n",
-       "      <td>10</td>\n",
-       "      <td>0</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>10</th>\n",
-       "      <td>11</td>\n",
-       "      <td>0</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>11</th>\n",
-       "      <td>12</td>\n",
-       "      <td>0</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>12</th>\n",
-       "      <td>13</td>\n",
-       "      <td>0</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>13</th>\n",
-       "      <td>14</td>\n",
-       "      <td>0</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>14</th>\n",
-       "      <td>15</td>\n",
-       "      <td>0</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>15</th>\n",
-       "      <td>16</td>\n",
-       "      <td>41</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>16</th>\n",
-       "      <td>17</td>\n",
-       "      <td>299</td>\n",
-       "      <td>1</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>17</th>\n",
-       "      <td>18</td>\n",
-       "      <td>282</td>\n",
-       "      <td>6</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>18</th>\n",
-       "      <td>19</td>\n",
-       "      <td>0</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>19</th>\n",
-       "      <td>20</td>\n",
-       "      <td>0</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>20</th>\n",
-       "      <td>21</td>\n",
-       "      <td>16</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>21</th>\n",
-       "      <td>22</td>\n",
-       "      <td>37</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>22</th>\n",
-       "      <td>23</td>\n",
-       "      <td>0</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>23</th>\n",
-       "      <td>24</td>\n",
-       "      <td>0</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>24</th>\n",
-       "      <td>25</td>\n",
-       "      <td>4</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>25</th>\n",
-       "      <td>26</td>\n",
-       "      <td>7</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>26</th>\n",
-       "      <td>27</td>\n",
-       "      <td>16</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>27</th>\n",
-       "      <td>28</td>\n",
-       "      <td>35</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>28</th>\n",
-       "      <td>29</td>\n",
-       "      <td>58</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>29</th>\n",
-       "      <td>30</td>\n",
-       "      <td>35</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>30</th>\n",
-       "      <td>31</td>\n",
-       "      <td>7</td>\n",
-       "      <td>0</td>\n",
-       "      <td>5</td>\n",
-       "    </tr>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "     日       日最高気温             month\n",
-       "     日 30℃以上 （真夏日） 35℃以上 （猛暑日）      \n",
-       "0    1           0           0     5\n",
-       "1    2           0           0     5\n",
-       "2    3           0           0     5\n",
-       "3    4           1           0     5\n",
-       "4    5          11           0     5\n",
-       "5    6          19           0     5\n",
-       "6    7           4           0     5\n",
-       "7    8           0           0     5\n",
-       "8    9           0           0     5\n",
-       "9   10           0           0     5\n",
-       "10  11           0           0     5\n",
-       "11  12           0           0     5\n",
-       "12  13           0           0     5\n",
-       "13  14           0           0     5\n",
-       "14  15           0           0     5\n",
-       "15  16          41           0     5\n",
-       "16  17         299           1     5\n",
-       "17  18         282           6     5\n",
-       "18  19           0           0     5\n",
-       "19  20           0           0     5\n",
-       "20  21          16           0     5\n",
-       "21  22          37           0     5\n",
-       "22  23           0           0     5\n",
-       "23  24           0           0     5\n",
-       "24  25           4           0     5\n",
-       "25  26           7           0     5\n",
-       "26  27          16           0     5\n",
-       "27  28          35           0     5\n",
-       "28  29          58           0     5\n",
-       "29  30          35           0     5\n",
-       "30  31           7           0     5"
-      ]
-     },
-     "execution_count": 3,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "# URLのベース部分を指定\n",
-    "base_url = 'https://www.data.jma.go.jp/obd/stats/etrn/view/summer.php?month='\n",
-    "\n",
-    "#空のデータフレーム\n",
-    "df_list = []\n",
-    "\n",
-    "# URLを生成して表示\n",
-    "for i in range(5, month + 1):\n",
-    "    url = base_url + str(i)\n",
-    "    print(url)\n",
-    "    df = pd.read_html(url)[2]\n",
-    "    df['month'] = i\n",
-    "    df_list.append(df)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 4,
-   "id": "86b1bf2f-f4a1-4044-8049-eab60f1f631d",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# データフレームのリストを連結\n",
-    "data = pd.concat(df_list)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 8,
-   "id": "c304436b-5bee-4d4d-b1f2-effb995c4f51",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# マルチインデックスを解除\n",
-    "data.reset_index(drop=True, inplace=True)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 9,
-   "id": "9e02b8e1-158e-4cee-b1f7-8c8aedf9b2c6",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# 列名を再設定\n",
-    "data.columns = ['day','真夏日', '猛暑日', 'month']"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 11,
-   "id": "c511f159-9ae3-400d-a897-cd283040d3ef",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# month_day列を作成\n",
-    "data['month_day'] = data['month'].astype(str) + '/' + data['day'].astype(str)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 13,
-   "id": "aca022f8-00f6-457a-a1dd-a5008f4f15c0",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "data.set_index('month_day' , inplace=True)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 14,
-   "id": "d62fd678-f891-44f2-bdeb-01870e4aeccc",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# flourish作成用にcsv保存\n",
-    "data.to_csv('Heatwave/data/flourish_全国_真夏日_猛暑日の地点数.csv')"
-   ]
-  }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3 (ipykernel)",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.9.13"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 5
-}
+#!/usr/bin/env python
+# coding: utf-8
+
+# # 真夏日と猛暑日の地点数（全国）の取得コード
+# 気象庁の「真夏日などの地点数（昨日まで）」のデータ
+# https://www.data.jma.go.jp/obd/stats/etrn/view/summer.php?
+# - GitHub用
+# - 出力データは'japan_heatpoint_count.csv'
+
+# In[1]:
+
+
+import pandas as pd
+from datetime import datetime
+
+
+# In[2]:
+
+
+# 現在の月を取得
+month = datetime.today().month
+
+
+# In[3]:
+
+
+# URLのベース部分を指定
+base_url = 'https://www.data.jma.go.jp/obd/stats/etrn/view/summer.php?month='
+
+#空のデータフレーム
+df_list = []
+
+# URLを生成して表示
+for i in range(5, month + 1):
+    url = base_url + str(i)
+    print(url)
+    df = pd.read_html(url)[2]
+    df['month'] = i
+    df_list.append(df)
+
+
+# In[4]:
+
+
+# データフレームのリストを連結
+data = pd.concat(df_list)
+
+
+# In[8]:
+
+
+# マルチインデックスを解除
+data.reset_index(drop=True, inplace=True)
+
+
+# In[9]:
+
+
+# 列名を再設定
+data.columns = ['day','真夏日', '猛暑日', 'month']
+
+
+# In[11]:
+
+
+# month_day列を作成
+data['month_day'] = data['month'].astype(str) + '/' + data['day'].astype(str)
+
+
+# In[13]:
+
+
+data.set_index('month_day', inplace=True)
+
+
+# In[14]:
+
+
+# flourish作成用にcsv保存
+data.to_csv('Heatwave/data/japan_heatpoint_count.csv')
+
