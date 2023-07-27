@@ -107,7 +107,7 @@ new_data = new_data[['date','max','year','month','day','month_day']]
 
 
 # 過去データ読み込み
-past_data = pd.read_csv('Heatwave/1963_2022_all_202306only.csv')
+past_data = pd.read_csv('1963_2022_all_202306only.csv')
 
 
 # In[14]:
@@ -128,7 +128,7 @@ data['month_day_flourish'] = data['month'].astype(str) + '/' + data['day'].astyp
 
 
 # githubのHeatwave/dataに保存
-data.to_csv('Heatwave/data/tokyo_max_temp.csv')
+data.to_csv('tokyo_max_temp.csv')
 
 
 # In[ ]:
@@ -177,7 +177,7 @@ ex_data_30 = ex_data[ex_data['max'] >= 30]
 year_counts_30 = ex_data_30['year'].value_counts() #年ごとの真夏日の数をカウント
 
 # Github用に保存
-year_counts_30.to_csv('Heatwave/data/tokyo_over30_count.csv')
+year_counts_30.to_csv('tokyo_over30_count.csv')
 
 
 # ### 2023年、真夏日の数は過去最高ペースで増えている
