@@ -31,6 +31,9 @@ jobs:
         
       - name: Run hot_weather script
         run: python hot_weather.py
+        
+      - name: Run ECMWF_temperture script
+        run: python ECMWF_temperture.py
       
       - name: Run 02summerday_point_num_github script
         run: python 02summerday_point_num_github.py
@@ -38,8 +41,7 @@ jobs:
       - name: Run python 04_japan_temperature_github script
         run: python 04_japan_temperature_github.py
         
-      - name: Run ECMWF_temperture script
-        run: python ECMWF_temperture.py
+
         
 
         
