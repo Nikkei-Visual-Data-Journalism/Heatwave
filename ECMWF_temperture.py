@@ -76,11 +76,9 @@ fig.contour_shaded(t850, style="temperature_rainbow_3")
 fig.coastlines(resolution="medium")
 #fig.gridlines()
 
-#fig.title(["",
-          # "START TIME: <grib_info key='base-date' format='%a %d %B %Y %H' where='shortName=t'/> ",
-         #  "VALID TIME: <grib_info key='valid-date' format='%a %d %B %Y %H' where='shortName=t'/>, STEP: <grib_info key='step' where='shortName=t' />"])
+#fig.title(["<grib_info key='valid-date' format='%Y-%m-%d' where='shortName=t'/>　"])
 fig.legend()
-#fig.footer("© European Centre for Medium-Range Weather Forecasts (ECMWF) Source: www.ecmwf.int Licence: CC-BY-4.0 and ECMWF Terms of Use (https://apps.ecmwf.int/datasets/licences/general/)", logo='ecmwf')
+fig.footer()
 
 fig.save('ECMWF_temperture.png')
 
