@@ -9,10 +9,10 @@ filename = 'medium-z500-t850.grib'
 filename
 
 
-#dateで0を基準にマイナスをセットすると過去データとれる。
+#dateで0を基準にマイナスをセットすると過去データとれる。最新データ
 client.retrieve(
-    date=0,
-    time=0,
+    #date=0,
+    #time=0,
     step=12,
     stream="oper",
     type="fc",
