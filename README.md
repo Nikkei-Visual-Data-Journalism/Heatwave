@@ -22,3 +22,6 @@
 
 ▼ECMWF_temperture.py(田中）
 世界地図気温
+
+▼hot_index.py
+環境省の暑さ指数、flourishは連携できておらず（0727）
