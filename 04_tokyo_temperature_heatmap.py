@@ -105,7 +105,7 @@ new_data = new_data[['date','max','year','month','day','month_day']]
 
 
 # 過去データ読み込み
-past_data = pd.read_csv('github_data/1963_2022_all_202306only.csv')
+past_data = pd.read_csv('1963_2022_all_202306only.csv')
 
 
 # In[11]:
