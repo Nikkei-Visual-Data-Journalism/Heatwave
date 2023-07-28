@@ -1,7 +1,7 @@
 # Heatwave
 猛暑ビジュアライゼーション
 
-|data|source|codes|output|source_data|workflow|visualization|note|
+|data|source|codes|output|更新頻度<br>source_data|更新頻度<br>workflow|visualization|note|
 | ---- | ---- | ---- | ---- | ---- |---- | ---- |---- |
 |現在の気温（日本）|[アメダス](https://www.jma.go.jp/bosai/map.html#5/34.488/137.021/&elem=temp&contents=amedas&interval=60)|[amedas_latest_data.py](https://github.com/Nikkei-Visual-Data-Journalism/Heatwave/blob/main/amedas_latest_data.py)|amedas_latest_all.csv<br>amedas_latest_temp.csv|1時間おき(10分程度遅れ)|毎時10, 40分|Flourish|[参考](https://okumuralab.org/~okumura/python/amedas.html)|
 |今年の真夏日猛暑日観測地点数|[気象庁](https://www.data.jma.go.jp/obd/stats/etrn/view/summer.php?)|[02summerday_point_num_github.py](https://github.com/Nikkei-Visual-Data-Journalism/Heatwave/blob/main/02summerday_point_num_github.py)|[japan_heatpoint_count.csv](ここにURLを貼る)|毎日(UTC 1:00AM)|毎日(UTC 1:00)|[Flourish 全国の猛暑日と真夏日の日数](https://public.flourish.studio/visualisation/14540327/)|@YukikoUne|
