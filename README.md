@@ -1,5 +1,9 @@
 # Heatwave
 猛暑ビジュアライゼーション
+|source|codes|output|visualization|
+|アメダス|amedas_latest_data.py|amedas_latest_all.csv|Flourish|
+
+
 
 ▼02summerday_point_num_github.py（有年）  
 日本　　📈今年の真夏日猛暑日観測地点数のグラフ用コード
@@ -25,3 +29,6 @@
 
 ▼hot_index.py
 環境省の暑さ指数、flourishは連携できておらず（0727）
+
+
+
