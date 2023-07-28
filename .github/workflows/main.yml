@@ -38,8 +38,11 @@ jobs:
       - name: Run 02summerday_point_num_github script
         run: python 02summerday_point_num_github.py
       
-      - name: Run python 04_japan_temperature_github script
-        run: python 04_japan_temperature_github.py
+      - name: Run python 04_tokyo_temperature_heatmap script
+        run: python 04_tokyo_temperature_heatmap.py
+      
+      - name: Run python 06_tokyo_max_temperature_annual script
+        run: python 06_tokyo_max_temperature_annual.py
         
 
         
