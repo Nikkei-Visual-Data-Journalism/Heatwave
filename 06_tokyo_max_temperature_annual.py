@@ -199,19 +199,11 @@ final_data['max35_year_total'] = final_data['max35_year_total'].astype(int)
 final_data['rem_days'] = final_data['max35_year_total'] - final_data['total_on_date'] 
 
 
-# In[30]:
+# In[18]:
 
 
-# flourishのポップアップ用に月日列を作成
-
-# 前日の日時を計算
-yesterday = today.replace(day=today.day - 1)
-
-# 前日の月と日を取得
-previous_month = yesterday.month
-previous_day = yesterday.day
-
-final_data['previous_day'] = (str(previous_month) + '月' + str(previous_day) + '日')
+# flourishのポップアップ用に前日の月日列を作成
+final_data['previous_day'] = (str(today_month) + '月' + str(today_day - 1) + '日')
 
 
 # In[19]:
