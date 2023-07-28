@@ -1,9 +1,9 @@
 # Heatwave
 猛暑ビジュアライゼーション
 
-|source|codes|output|update|visualization|
-| ---- | ---- | ---- | ---- |---- |
-|[アメダス](https://www.jma.go.jp/bosai/map.html#5/34.488/137.021/&elem=temp&contents=amedas&interval=60)|[amedas_latest_data.py](https://github.com/Nikkei-Visual-Data-Journalism/Heatwave/blob/main/amedas_latest_data.py)|amedas_latest_all.csv<br>amedas_latest_temp.csv|毎時10, 40分|Flourish|
+|source|codes|output|update_frequency|workflow|visualization|note|
+| ---- | ---- | ---- | ---- |---- | ---- |---- |
+|[アメダス](https://www.jma.go.jp/bosai/map.html#5/34.488/137.021/&elem=temp&contents=amedas&interval=60)|[amedas_latest_data.py](https://github.com/Nikkei-Visual-Data-Journalism/Heatwave/blob/main/amedas_latest_data.py)|amedas_latest_all.csv<br>amedas_latest_temp.csv|1時間おき(10分程度遅れ)|毎時10, 40分|Flourish|[参考](https://okumuralab.org/~okumura/python/amedas.html)|
 
 
 
