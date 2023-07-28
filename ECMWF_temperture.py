@@ -76,11 +76,19 @@ fig.contour_shaded(t850, style="temperature_rainbow_3")
 fig.coastlines(resolution="medium")
 #fig.gridlines()
 
+#タイトル、凡例
 fig.title(["<grib_info key='valid-date' format='%Y-%m-%d' where='shortName=t'/>　"])
 fig.legend()
 fig.footer()
 
-fig.save('ECMWF_temperture.png')
+#出力
+##img dirに変更
+fig.save('./img/ECMWF_temperture.png')
+
+#追加作業候補
+##titleに入れている'valid-date'を'%Y年%-m月%-d日'形式のテキストにして別のファイルに入れてgithub上におくように変更
+##github上のテキスト-->htmlタグで呼び出してRCB上に置き、動的にテキスト表示できる
+
 
 """Note that plot produced using open data dataset will slightly differ from one from Open Charts. This is due to different resolution of the data.  
 Open data is on 0.4x0.4 resolution, while high resolution data is 0.1x0.1 grid.
