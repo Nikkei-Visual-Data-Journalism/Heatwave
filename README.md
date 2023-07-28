@@ -1,6 +1,8 @@
 # Heatwave
 猛暑ビジュアライゼーション
+
 |source|codes|output|visualization|
+| ---- | ---- | ---- | ---- |
 |アメダス|amedas_latest_data.py|amedas_latest_all.csv|Flourish|
 
 
