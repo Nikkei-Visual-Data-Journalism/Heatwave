@@ -21,11 +21,13 @@ world_temp = world_temp.rename(columns={0:'temp', 'name':'year'}).dropna()
 #日付を入れる
 ##for loopを使うより、元データの数を合わせて日付を入れたほうが速い
 world_temp['date'] = pd.date_range(start='1979-01-01', periods=len(world_temp), freq='D')
+#popup表示用のテキスト
+world_temp['date_popup'] = world_temp.date.dt.strftime('%Y年%m月%d日')
 ##x軸描画用、2000年にそろえる
 world_temp['date_x_axis'] = world_temp.date.apply(lambda x: x.replace(year=2000)).dt.strftime('%Y-%m-%d')
 
 #並び順をととのえる
-world_temp = world_temp.loc[:,['date','date_x_axis','year','temp']]
+world_temp = world_temp.loc[:,['date','date_popup','date_x_axis','year','temp']]
 
 #出力
 ##dataフォルダに
