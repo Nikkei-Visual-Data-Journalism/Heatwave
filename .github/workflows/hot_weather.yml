@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
   # schedule/cron means "on a set schedule"
   schedule:
-  # ここ加筆してください
-    - cron: '0 5 * * *'
+  #UTC5:05AM(日本時間午後2時05分)に実行
+    - cron: '5 5 * * *'
 jobs:
   scrape:
     # For some reason, we run love versions of linux
