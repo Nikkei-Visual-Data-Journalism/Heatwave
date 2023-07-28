@@ -28,7 +28,6 @@ world_temp['date_x_axis'] = world_temp.date.apply(lambda x: x.replace(year=2000)
 
 #並び順をととのえる
 world_temp = world_temp.loc[:,['date','date_popup','date_x_axis','year','temp']]
-world_temp = world_temp.sort_values(by=['date'], ascending=False)
 
 #出力
 ##dataフォルダに
