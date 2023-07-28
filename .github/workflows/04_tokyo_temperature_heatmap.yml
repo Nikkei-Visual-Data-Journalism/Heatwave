@@ -1,0 +1,59 @@
+# Call this whatever you want
+name: 04_tokyo_temperature_heatmap
+
+# When does it get run?
+on:
+  # workflow_dispatch means "I can click a button and force it to run"
+  workflow_dispatch:
+  # schedule/cron means "on a set schedule"
+  schedule:
+  # ここを加筆してください
+    - cron: '0 5 * * *'
+jobs:
+  scrape:
+    # For some reason, we run love versions of linux
+    runs-on: ubuntu-latest
+    steps:
+      # Download all of the code from your repo
+      - name: Check out this repo
+        uses: actions/checkout@v2
+      # Set up Python 3.9
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      #
+      - name: Install necessary Python packages
+        run: pip install pandas beautifulsoup4 requests tabula-py ecmwf-data ecmwf-opendata magpye datetime lxml
+        
+      # MAKE SURE YOUR SCRAPER FILENAME MATCHES THE FILENAME HERE!!
+      - name: Run world_temperature script
+        run: python world_temperature.py
+        
+      - name: Run hot_weather script
+        run: python hot_weather.py
+        
+      - name: Run ECMWF_temperture script
+        run: python ECMWF_temperture.py
+      
+      - name: Run 02summerday_point_num_github script
+        run: python 02summerday_point_num_github.py
+      
+      - name: Run python 04_tokyo_temperature_heatmap script
+        run: python 04_tokyo_temperature_heatmap.py
+      
+      - name: Run python 06_tokyo_max_temperature_annual script
+        run: python 06_tokyo_max_temperature_annual.py
+        
+
+        
+
+        
+      - name: Add and commit	
+        run: |
+          git add .	
+          git config user.name "Automated"	
+          git config user.email "actions@users.noreply.github.com"	
+          git commit --allow-empty -m "Latest data"	
+      - name: Push	
+        run: git push
