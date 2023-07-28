@@ -24,8 +24,7 @@ world_temp['date'] = pd.date_range(start='1979-01-01', periods=len(world_temp), 
 #popup表示用のテキスト
 world_temp['date_popup'] = world_temp.date.dt.strftime('%Y年%-m月%-d日')
 ##x軸描画用
-#world_temp['date_x_axis'] = world_temp.date.apply(lambda x: x.replace(year=2000)).dt.strftime('%Y-%m-%d')
-world_temp['date_x_axis'] = world_temp.date.apply(lambda x: x.strftime('%-m月%-d日') if x.day!=1 else f"{x.month}月")
+world_temp['date_x_axis'] = world_temp.date.apply(lambda x: x.replace(year=2000)).dt.strftime('%Y-%m-%d')
 
 #並び順をととのえる
 world_temp = world_temp.loc[:,['date','date_popup','date_x_axis','year','temp']]
