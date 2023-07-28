@@ -17,7 +17,7 @@ jobs:
           python-version: '3.9'
 
       - name: Install necessary Python packages
-        run: pip install pandas beautifulsoup4 requests tabula-py datetime
+        run: pip install pandas numpy datetime
         
       - name: Run world_temperature script
         run: python world_temperature.py
