@@ -34,4 +34,9 @@ amedas[['lat','lon']] = amedas[['lat','lon']].applymap(lambda x: x[0] + x[1]/60)
 ##残りのリスト形式のデータから値のみ抽出
 amedas = amedas.applymap(lambda x: x[0] if type(x)==list else x)
 
-amedas.to_csv('./data/amedas_latest_data.csv',encoding='utf-8-sig',index=False)
+#データ出力
+###全部入り
+amedas.to_csv('./data/amedas_latest_all.csv',encoding='utf-8-sig',index=False)
+
+###tempのみ
+amedas.dropna(subset=['temp']).to_csv('./data/amedas_latest_temp.csv',encoding='utf-8-sig',index=False)
