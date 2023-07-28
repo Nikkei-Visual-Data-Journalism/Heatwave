@@ -19,7 +19,7 @@ jobs:
           
       - name: Install necessary Python packages
         run: pip install pandas requests datetime
-      - name: Run the scraping script
+      - name: Run the script
         run: python amedas_latest_data.py
       - name: Commit and push if content changed
         run: |-
