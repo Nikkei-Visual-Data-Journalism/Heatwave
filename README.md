@@ -3,7 +3,7 @@
 
 |source|codes|output|visualization|update|
 | ---- | ---- | ---- | ---- |---- |
-|[アメダス](https://www.jma.go.jp/bosai/map.html#5/34.488/137.021/&elem=temp&contents=amedas&interval=60)|amedas_latest_data.py|amedas_latest_all.csv<br>amedas_latest_temp.csv|Flourish|毎時10, 40分|
+|[アメダス](https://www.jma.go.jp/bosai/map.html#5/34.488/137.021/&elem=temp&contents=amedas&interval=60)|[amedas_latest_data.py](https://github.com/Nikkei-Visual-Data-Journalism/Heatwave/blob/main/amedas_latest_data.py)|amedas_latest_all.csv<br>amedas_latest_temp.csv|Flourish|毎時10, 40分|
 
 
 
