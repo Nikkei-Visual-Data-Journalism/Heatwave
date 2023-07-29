@@ -60,6 +60,6 @@ heat_points.to_csv(filename, index=False)
 
 #最終更新時刻を記録
 ##動的テキスト表示用（使えるかは未定）
-update_log = f"{yyyymmdd_dt.strftime('%Y年%-m月%-d日')}{data['現在時刻(時)'][0]}時{data['現在時刻(分)'][0]}分時点"
+update_log = f"{yyyymmdd_dt.strftime('%Y年%-m月%-d日')}{data['現在時刻(時)'][0]}時時点"
 with open('./data-maxtemp/timeseries-data/update_log.txt', 'w') as f:
     f.write(update_log)
