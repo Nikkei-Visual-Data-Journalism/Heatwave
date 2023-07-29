@@ -20,7 +20,7 @@ def get_previous_data(d):
     #dataにも記載
     data['date'] = pd.to_datetime(yyyymmdd, format='%Y%m%d')
     #csvで出力
-    daily_data.to_csv(filename, index=False)
+    data.to_csv(filename, index=False)
     return data
 
 #実行
@@ -54,10 +54,9 @@ data_agg['null_values'] = data_agg.maxtemp.isna()
 heat_points_7days = data_agg.groupby(['date'])[['over15','over20','over25','over30','over35','over40','over45','over50','total','null_values']].sum().reset_index()
 
 #過去分と統合
-filename = "data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-ts.csv"
-url = f"https://raw.githubusercontent.com/Nikkei-Visual-Data-Journalism/Heatwave/main/{filename}"
+filename = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-ts.csv"
 ##過去分を取得
-heat_points = pd.read_csv(url)
+heat_points = pd.read_csv(filename)
 heat_points = pd.concat([heat_points,heat_points_7days])
 ##重複削除（新しく入ったほうを残す）
 heat_points.date = pd.to_datetime(heat_points.date)
