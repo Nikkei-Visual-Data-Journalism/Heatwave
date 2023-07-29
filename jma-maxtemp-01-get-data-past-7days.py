@@ -62,4 +62,4 @@ heat_points = pd.concat([heat_points,heat_points_7days])
 heat_points.date = pd.to_datetime(heat_points.date)
 heat_points = heat_points.loc[~heat_points.duplicated(subset=['date'], keep='last')].reset_index(drop=True)
 ##出力
-heat_points.to_csv(f"./{filename}", index=False)
+heat_points.to_csv(filename, index=False)
