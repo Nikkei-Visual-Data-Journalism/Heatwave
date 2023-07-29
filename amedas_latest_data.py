@@ -12,7 +12,8 @@ data1 = r.json()
 
 #data2: amedasの最新気象データ
 ##最新の時刻
-r = requests.get('https://www.jma.go.jp/bosai/amedas/data/latest_time.txt')
+url = 'https://www.jma.go.jp/bosai/amedas/data/latest_time.txt'
+r = requests.get(url)
 latest_time = r.text
 latest_time = datetime.strptime(latest_time, '%Y-%m-%dT%H:%M:%S%z').strftime('%Y%m%d%H0000')
 
