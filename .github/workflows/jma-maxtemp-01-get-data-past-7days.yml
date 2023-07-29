@@ -1,0 +1,37 @@
+#気象庁、真夏日・猛暑日の数01（直近7日間のデータを取得・更新する）
+#ウェブ上のデータは毎日5:00ごろ更新＋修正は13:00、19:00、翌日1:00ごろの更新で反映
+name: jma-maxtemp-01-get-data-past-7days
+
+on:
+  workflow_dispatch:
+  schedule:
+    #UTC20:30(JST5:30), UTC4:30(JST13:30), UTC10:30(JST19:30), UTC16:30(JST1:30)に実行
+    - cron: '30 20 * * *'
+    - cron: '30 4 * * *'
+    - cron: '30 10 * * *'
+    - cron: '30 16 * * *'
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out this repo
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install necessary Python packages
+        run: pip install pandas re
+        
+      - name: Run jma-maxtemp-01-get-data-past-7days script
+        run: python jma-maxtemp-01-get-data-past-7days.py
+        
+      - name: Commit and push if content changed
+        run: |-
+          git config user.name "Automated"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          timestamp=$(date -u)
+          git commit -m "Latest data: ${timestamp}" || exit 0
+          git push
