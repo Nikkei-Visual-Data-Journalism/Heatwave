@@ -207,8 +207,9 @@ final_data['previous_day'] = (str(today_month) + '月' + str(today_day - 1) + '�
 
 
 # In[19]:
-
+#ファイル名の設定
+filename = f"data/{today}_tokyo_maxtemp_data_until_now.csv"  # ファイル名にデータ取得時の時刻を組み込む
 
 # 保存
-final_data.to_csv('data/tokyo_maxtemp_data_until_now.csv', index=False)
+final_data.to_csv(filename, index=False)
 
