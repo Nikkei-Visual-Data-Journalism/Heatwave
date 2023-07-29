@@ -126,5 +126,5 @@ data['month_day_flourish'] = data['month'].astype(str) + '/' + data['day'].astyp
 
 
 # 保存
-data.to_csv('tokyo_max_temp.csv')
+data.to_csv('data/tokyo_max_temp.csv')
 
