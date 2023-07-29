@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 # # 東京の「d時点（前日）」の猛暑日（過去60年分、バーチャート作成）
 # - github用
 # - [d時点]について。1963年〜2023年6月末までの東京（東京都）の日別最高気温データ'tokyo_maxtemp_byD_until202306.csv'(データソース：気象庁「過去の気象データ・ダウンロード」 'https://www.data.jma.go.jp/risk/obsdl/index.php#')
@@ -8,9 +5,6 @@
 # https://www.data.jma.go.jp/stats/etrn/view/daily_s1.php?prec_no=44&block_no=47662&year=2023&month=7 )
 # - 出力データ②（バーチャート用）:'tokyo_over30_count.csv'（東京の年間真夏日数）
 # - 出力データ③（バーチャート用）:'tokyo_over35_count.csv'（東京の年間猛暑日数）
-
-# In[1]:
-
 
 import pandas as pd
 import datetime
