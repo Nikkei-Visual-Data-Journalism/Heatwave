@@ -26,9 +26,6 @@ jobs:
         run: pip install pandas beautifulsoup4 requests tabula-py ecmwf-data ecmwf-opendata magpye datetime lxml
         
       # MAKE SURE YOUR SCRAPER FILENAME MATCHES THE FILENAME HERE!!
-      - name: Run hot_weather script
-        run: python hot_weather.py
-      
       - name: Run 02summerday_point_num_github script
         run: python 02summerday_point_num_github.py
       
