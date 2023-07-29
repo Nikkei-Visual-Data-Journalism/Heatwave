@@ -26,14 +26,8 @@ jobs:
         run: pip install pandas beautifulsoup4 requests tabula-py ecmwf-data ecmwf-opendata magpye datetime lxml
         
       # MAKE SURE YOUR SCRAPER FILENAME MATCHES THE FILENAME HERE!!
-      - name: Run world_temperature script
-        run: python world_temperature.py
-        
       - name: Run hot_weather script
         run: python hot_weather.py
-        
-      - name: Run ECMWF_temperture script
-        run: python ECMWF_temperture.py
       
       - name: Run 02summerday_point_num_github script
         run: python 02summerday_point_num_github.py
@@ -44,9 +38,6 @@ jobs:
       - name: Run python 06_tokyo_max_temperature_annual script
         run: python 06_tokyo_max_temperature_annual.py
         
-
-        
-
         
       - name: Add and commit	
         run: |
