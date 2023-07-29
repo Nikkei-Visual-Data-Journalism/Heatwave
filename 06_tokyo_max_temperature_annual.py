@@ -173,7 +173,7 @@ ex_data = data.loc[condition1 | condition2]
 ex_data.groupby('year').size().unique()
 
 
-# In[30]:
+# In[49]:
 
 
 # 年毎の猛暑日のd日時点での合計値を算出
@@ -199,14 +199,14 @@ final_data['max35_year_total'] = final_data['max35_year_total'].astype(int)
 final_data['rem_days'] = final_data['max35_year_total'] - final_data['total_on_date'] 
 
 
-# In[31]:
+# In[50]:
 
 
 # flourishのポップアップ用に前日の月日列を作成
 final_data['previous_day'] = (str(today_month) + '月' + str(today_day - 1) + '日')
 
 
-# In[38]:
+# In[51]:
 
 
 # flourishの2023年データの色分け用に、2023年猛暑日合計列'2023_total'を作成
@@ -214,8 +214,17 @@ colordata = final_data.iloc[60,2]
 final_data['2023_total'] = 0
 final_data.iloc[60, 5] = colordata
 
+# flourishのポップアップ用に猛暑日数のカラムを作成
+final_data['popup_total_on_date'] = final_data['total_on_date']
+
 # 'total_on_date'列から2023年のデータを削除
 final_data.iloc[60, 2] = 0
+
+
+# In[52]:
+
+
+final_data
 
 
 # In[19]:
