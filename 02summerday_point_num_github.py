@@ -77,5 +77,5 @@ data.set_index('month_day', inplace=True)
 
 
 # flourish作成用にcsv保存
-data.to_csv('japan_heatpoint_count.csv')
+data.to_csv('data-heatpoint-num/japan_heatpoint_count.csv')
 
