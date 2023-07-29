@@ -22,7 +22,7 @@ jobs:
           python-version: '3.9'
 
       - name: Install necessary Python packages
-        run: pip install pandas re
+        run: pip install pandas
         
       - name: Run jma-maxtemp-01-get-data-past-7days script
         run: python jma-maxtemp-01-get-data-past-7days.py
