@@ -210,5 +210,5 @@ final_data['previous_day'] = (str(today_month) + '月' + str(today_day - 1) + '�
 
 
 # 保存
-final_data.to_csv('tokyo_maxtemp_data_until_now.csv', index=False)
+final_data.to_csv('data/tokyo_maxtemp_data_until_now.csv', index=False)
 
