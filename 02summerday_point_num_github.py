@@ -39,4 +39,4 @@ data['month_day'] = data['month'].astype(str) + '/' + data['day'].astype(str)
 data.set_index('month_day', inplace=True)
 
 # flourish作成用にcsv保存
-data.to_csv('data/japan_heatpoint_count.csv')
+data.to_csv('./data/japan_heatpoint_count.csv')
