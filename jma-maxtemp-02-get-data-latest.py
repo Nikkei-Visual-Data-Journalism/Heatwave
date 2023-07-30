@@ -54,6 +54,7 @@ heat_points.date = pd.to_datetime(heat_points.date)
 ##統合して重複削除（新しく入ったほうを残す）
 heat_points = pd.concat([heat_points, heat_points_latest.to_frame().T])
 heat_points = heat_points.loc[~heat_points.duplicated(subset=['date'], keep='last')].reset_index(drop=True)
+heat_points = heat_points.dropna(subset='date').sort_values(by='date')
 
 ##出力
 heat_points.to_csv(filename, index=False)
