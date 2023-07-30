@@ -18,11 +18,11 @@ from bs4 import BeautifulSoup
 tabula.environment_info()
 
 ##test
-pdf_path = 'https://www.fdma.go.jp/disaster/heatstroke/items/r5/heatstroke_sokuhouti_20230710.pdf'
-dfs = tabula.read_pdf(pdf_path, stream=True, pages=1)
+#pdf_path = 'https://www.fdma.go.jp/disaster/heatstroke/items/r5/heatstroke_sokuhouti_20230710.pdf'
+#dfs = tabula.read_pdf(pdf_path, stream=True, pages=1)
 
-df = dfs[0]
-df_base = df.iloc[2:7, [0, 5]]
+#df = dfs[0]
+#df_base = df.iloc[2:7, [0, 5]]
 
 ##Auto test
 
