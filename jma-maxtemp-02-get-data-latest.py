@@ -24,6 +24,7 @@ filename = f"./data-maxtemp/daily-data/jma-maxtemp-{yyyymmdd}.csv"
 data['date'] = yyyymmdd_dt
 ##csv
 data.to_csv(filename, index=False)
+data.to_csv("./data-maxtemp/daily-data/jma-maxtemp-latest.csv")
 
 #真夏日・猛暑日の数をかぞえる
 rename_dic = {col:'maxtemp' for col in data.columns if '最高気温(℃)' in col}
