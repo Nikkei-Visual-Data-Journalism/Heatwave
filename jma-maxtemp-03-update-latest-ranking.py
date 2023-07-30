@@ -43,5 +43,5 @@ record_high['項目'] = '観測史上最高を更新'
 year_high = rank_df[rank_df['記録'] == '今年最高'].copy()
 year_high['項目'] = '今年最高を更新'
 
-rank_df = pd.concat([top10, record_high, year_high, rank_df])
+#rank_df = pd.concat([top10, record_high, year_high, rank_df])
 rank_df.to_csv('./data/maxtemp-ranking-latest.csv',index=False)
