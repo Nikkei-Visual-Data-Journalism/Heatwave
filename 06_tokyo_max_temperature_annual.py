@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# coding: utf-8
+
 # # 東京の「d時点（前日）」の猛暑日（過去60年分、バーチャート作成）
 # - github用
 # - [d時点]について。1963年〜2023年6月末までの東京（東京都）の日別最高気温データ'tokyo_maxtemp_byD_until202306.csv'(データソース：気象庁「過去の気象データ・ダウンロード」 'https://www.data.jma.go.jp/risk/obsdl/index.php#')
@@ -6,9 +9,13 @@
 # - 出力データ②（バーチャート用）:'tokyo_over30_count.csv'（東京の年間真夏日数）
 # - 出力データ③（バーチャート用）:'tokyo_over35_count.csv'（東京の年間猛暑日数）
 
+# In[53]:
+
+
 import pandas as pd
 import datetime
 from datetime import datetime
+from datetime import datetime, timedelta
 
 
 # ### d時点のデータを取得
@@ -193,14 +200,20 @@ final_data['max35_year_total'] = final_data['max35_year_total'].astype(int)
 final_data['rem_days'] = final_data['max35_year_total'] - final_data['total_on_date'] 
 
 
-# In[50]:
+# In[63]:
 
+
+# 今日の日付を取得
+today = datetime.now().date()
+
+# 昨日の日付を取得
+yesterday = today - timedelta(days=1)
 
 # flourishのポップアップ用に前日の月日列を作成
-final_data['previous_day'] = (str(today_month) + '月' + str(today_day - 1) + '日')
+final_data['previous_day'] = yesterday.strftime("%-m月%-d日")
 
 
-# In[51]:
+# In[64]:
 
 
 # flourishの2023年データの色分け用に、2023年猛暑日合計列'2023_total'を作成
@@ -215,7 +228,7 @@ final_data['popup_total_on_date'] = final_data['total_on_date']
 final_data.iloc[60, 2] = 0
 
 
-# In[52]:
+# In[65]:
 
 
 final_data
