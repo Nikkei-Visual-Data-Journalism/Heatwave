@@ -8,7 +8,7 @@ on:
   # schedule/cron means "on a set schedule"
   # スケジュールを加筆してください
   schedule:
-    - cron: '0 16 * * *' #日本時間午前1時更新
+    - cron: '0 20 * * *' #日本時間午前5時更新
 jobs:
   scrape:
     # For some reason, we run love versions of linux
