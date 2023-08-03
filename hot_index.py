@@ -93,16 +93,7 @@ df_merge = pd.merge(df_tempdata, df_location_data, on = 'amdno')
 # In[49]:
 
 
-df_merge.to_csv("hot_index.csv", index = False)
-
-
-# In[50]:
-
-
-df_merge
-
-
-# In[ ]:
+df_merge.to_csv("./data/hot_index.csv", index = False)
 
 
 
