@@ -2,9 +2,9 @@ name: hot_index
 
 on:
   workflow_dispatch:
-  schedule:
-  #UTC5:05AM(日本時間午後2時05分)に実行
-    - cron: '*/30 * * * *'
+  #schedule:
+  #UTC5:30分ごとに実行
+  #  - cron: '*/30 * * * *'
 jobs:
   scrape:
     runs-on: ubuntu-latest
