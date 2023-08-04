@@ -18,7 +18,7 @@ jobs:
           python-version: '3.9'
           
       - name: Install necessary Python packages
-        run: pip install ecmwf-data ecmwf-opendata magpye datetime lxml pygrib
+        run: pip install ecmwf-data ecmwf-opendata magpye datetime lxml pygrib basemap
         
       - name: Run ECMWF_temperture script
         run: python ECMWF_temperture.py
