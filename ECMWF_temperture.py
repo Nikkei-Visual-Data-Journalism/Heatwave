@@ -107,7 +107,7 @@ plt.contourf(x, y, temperature_celsius, cmap='Reds', levels=20)
 # カラーバー
 divider = make_axes_locatable(plt.gca())
 cax = divider.append_axes("right", size="5%", pad=0.1)
-#plt.colorbar(cax=cax)
+plt.colorbar(cax=cax)
 
 # グリッドを表示
 m.drawparallels(np.arange(lat_min, lat_max), fontsize=0.1)
