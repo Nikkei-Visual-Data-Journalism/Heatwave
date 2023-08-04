@@ -61,29 +61,76 @@ t850 -= 273.15
 """## Plotting the data
 And finally, we can plot the data on the map.
 """
+###新しいマッププロット###
+
+grib_file = pygrib.open(filename)
+grib_temperture = grib_file.select(name="Temperature") 
+
+lats, lons = grib_temperture[0].latlons() 
+mslp = grib_temperture[0].values
+
+flat_lats= np.ravel(lats)
+flat_lons= np.ravel(lons)
+
+temperature_data = grib_file.select(name='Temperature')[0]
+lats, lons = temperature_data.latlons()
+temperature = temperature_data.values
+
+# 地図の範囲を設定
+lon_min, lon_max = lons.min(), lons.max()
+lat_min, lat_max = lats.min(), lats.max()
+
+# 最小緯度がおかしかったので
+m = Basemap(
+    llcrnrlon=lon_min, llcrnrlat= -60,
+    urcrnrlon=lon_max, urcrnrlat=70,
+    projection='merc', resolution='l'
+)
+
+# マップの背景を描画
+m.drawcoastlines()
+#m.drawcountries()
+#m.drawmapboundary()
+
+# 温度データをカラーマップでプロットします
+x, y = m(lons, lats)
+temperature_celsius = temperature - 273.15  # ケルビンを摂氏に変換
+plt.contourf(x, y, temperature_celsius, cmap='Reds', levels=20)
+
+# カラーバー
+divider = make_axes_locatable(plt.gca())
+cax = divider.append_axes("right", size="5%", pad=0.1)
+#plt.colorbar(cax=cax, label='Temperature (°C)')
+
+# グリッドを表示
+m.drawparallels(np.arange(lat_min, lat_max, 10.), labels=[1, 0, 0, 0], fontsize=10)
+#m.drawmeridians(np.arange(lon_min, lon_max, 10.), labels=[0, 0, 0, 1], fontsize=10)
+
+plt.savefig('./img/ECMWF_temperture.png')
+
 
 #GeoMap()の()内で投影地域を変える。
-fig = GeoMap()
+#fig = GeoMap()
 
-fig.coastlines(land_colour="cream",resolution="medium")
+#fig.coastlines(land_colour="cream",resolution="medium")
 
 
-fig.contour_shaded(t850, style="temperature_rainbow_3")
+#fig.contour_shaded(t850, style="temperature_rainbow_3")
 
 #等高線
 #fig.contour_lines(gh500, style="black_i4")
 
-fig.coastlines(resolution="medium")
+#fig.coastlines(resolution="medium")
 #fig.gridlines()
 
 #タイトル、凡例
-fig.title(["<grib_info key='valid-date' format='%Y-%m-%d' where='shortName=t'/>　"])
-fig.legend()
-fig.footer()
+#fig.title(["<grib_info key='valid-date' format='%Y-%m-%d' where='shortName=t'/>　"])
+#fig.legend()
+#fig.footer()
 
 #出力
 ##img dirに変更
-fig.save('./img/ECMWF_temperture.png')
+#fig.save('./img/ECMWF_temperture.png')
 
 #追加作業候補
 ##titleに入れている'valid-date'を'%Y年%-m月%-d日'形式のテキストにして別のファイルに入れてgithub上におくように変更
