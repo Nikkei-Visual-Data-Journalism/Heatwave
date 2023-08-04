@@ -1,6 +1,13 @@
 import ecmwf.data as ecdata
 from magpye import GeoMap
 from ecmwf.opendata import Client
+import pygrib
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+import math
+
 
 client = Client("ecmwf", beta=True)
 
