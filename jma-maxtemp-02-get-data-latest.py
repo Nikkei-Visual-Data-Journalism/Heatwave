@@ -77,11 +77,24 @@ data_table.date = pd.to_datetime(data_table.date)
 data_table['year'] = data_table['date'].dt.year
 data_table = data_table[~data_table.duplicated(subset=['date','pref'],keep='last')]
 data_table['sort_n'] = data_table.pref.map(points.set_index('pref').prec_no.to_dict())
-data_table = data_table.sort_values(by=['date','sort_n']).drop(['sort_n'],axis=1).reset_index(drop=True)
+data_table = data_table.sort_values(by=['date','sort_n']).reset_index(drop=True)
 #True/False-->1/0に
 cols = [col for col in data_table.columns if 'over' in col]
 data_table[cols] = data_table[cols].astype(int)
-##出力
+
+#集計2-2: 
+##年間＆前年同期の猛暑・真夏日をカウント
+data_table_fullyear = data_table.groupby(['year','pref','sort_n'])[cols].sum()
+data_table_ytd = data_table[data_table['date'].apply(lambda x: x.replace(year=2000))<=yyyymmdd_dt.replace(year=2000)]
+data_table_ytd = data_table_ytd.groupby(['year','pref','sort_n'])[cols].sum()
+data_table_y = pd.concat([data_table_fullyear, data_table_ytd.add_suffix('_ytd')],axis=1)
+data_table_y = data_table_y.sort_index(level=[0,2]).reset_index(level='sort_n', drop=True).reset_index()
+##年間を出力
+filename_y = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-by-pref-ts.csv"
+data_table_y.to_csv(filename_y,index=False)
+
+##県別一覧を出力
+data_table = data_table.drop(['sort_n'],axis=1)
 data_table.to_csv(filename, index=False)
 
 #集計3: 最高気温の表
