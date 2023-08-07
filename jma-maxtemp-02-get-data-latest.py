@@ -92,10 +92,35 @@ data_table_y = data_table_y.sort_index(level=[0,2]).reset_index(level='sort_n', 
 ##年間を出力
 filename_y = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-by-pref-ts.csv"
 data_table_y.to_csv(filename_y,index=False)
+##Flourish用のバックデータを更新
+flourish = pd.DataFrame()
+temps = {30:'真夏日', 35:'猛暑日'}
+for key, val in temps.items():
+    temp_df = data_table_y.set_index(['year','pref'])[[col for col in data_table_y if str(key) in col]]
+    rename_dic = {
+        f'over{key}':'heatpoints',
+        f'over{key}_capitol':'heatpoints_capitol',
+        f'over{key}_ytd':'heatpoints_ytd',
+        f'over{key}_capitol_ytd':'heatpoints_capitol_ytd'
+    }
+    temp_df = temp_df.rename(columns=rename_dic)
+    temp_df['temp'] = val
+    flourish = pd.concat([flourish, temp_df])
+flourish = flourish.reset_index(drop=False)
+flourish['year'] = flourish['year'].astype(int)
+flourish['きょう時点'] = flourish.heatpoints_ytd
+flourish['きょう以降の期間'] = flourish.heatpoints - flourish.heatpoints_ytd
+filename_f = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-by-pref-flourish.csv"
+flourish.to_csv(filename_f,index=False)
 
 ##県別一覧を出力
 data_table = data_table.drop(['sort_n'],axis=1)
 data_table.to_csv(filename, index=False)
+
+
+
+
+
 
 #集計3: 最高気温の表
 ##最新分のみで計算
