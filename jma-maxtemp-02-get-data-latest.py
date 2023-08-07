@@ -1,6 +1,8 @@
 #気象庁
 #①最新の最高気温のデータを取得
-#②過去のtsと統合してtimeseriesを更新
+#②集計１：真夏日・猛暑日の観測地点数（全国）＝過去データ統合して更新
+#③集計２：各都道府県の最高気温一覧＝過去データと統合して更新
+#④集計３：各観測地点のきょうの最高気温（直近のみ）＝最新データに更新
 
 #https://www.data.jma.go.jp/stats/data/mdrr/docs/csv_dl_readme.html
 #最新は1時間毎の更新（毎時00分の観測データを50分過ぎに更新）
@@ -43,6 +45,8 @@ data['null_values'] = data.maxtemp.isna()
 #追加データ（集計2用）
 data['pref'] = data['観測所番号'].map(points.set_index(['観測所番号']).pref.to_dict())
 data['capitol'] = data['観測所番号'].isin(points[points.capitol==1]['観測所番号']).astype(int)
+#追加データ（集計3用）
+data['name'] = data['観測所番号'].map(points.set_index('観測所番号').name.to_dict())
 
 #集計1: 猛暑・真夏日の観測地点数（全国）
 ##最新分
@@ -74,6 +78,14 @@ data_table = data_table[~data_table.duplicated(subset=['date','pref'],keep='last
 ##出力
 data_table.to_csv(filename, index=False)
 
+#集計3: 最高気温の表
+##最新分のみで計算
+heinen = [col for col in data.columns if '平年' in col][0]
+rank_df = data[['date','観測所番号','pref','name','maxtemp',heinen]]
+rank_df = rank_df.rename(columns={'pref':'都道府県名','name':'地名','maxtemp':'最高気温',heinen:'平年差'})
+rank_df = rank_df.sort_values(by=['最高気温'],ascending=False)
+##出力
+rank_df.to_csv('./data/maxtemp-ranking-latest.csv',index=False)
 
 #最終更新時刻を記録
 ##動的テキスト表示用（使えるかは未定）
