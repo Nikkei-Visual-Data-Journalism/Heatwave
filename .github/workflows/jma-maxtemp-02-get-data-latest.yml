@@ -1,11 +1,13 @@
-#02-気象庁、真夏日・猛暑日の数02（最新データを毎時取得＋日別の過去データと統合）
-#03-ランキング表を生成
+#02-気象庁、最高気温の最新データを毎時取得
+#集計①真夏日・猛暑日の観測地点数（全国）最新＋過去データと統合
+#集計②都道府県別の最高気温　最新＋過去データと統合
+#集計③各観測地点の「きょうの最高気温」　最新データに更新
 
 #最新データは1時間毎の更新（毎時00分の観測データを50分過ぎに更新）
 ###過去７日はウェブ上のデータは毎日5:00ごろ更新＋修正は13:00、19:00、翌日1:00ごろの更新で反映
 ###→github上で30分遅れで取得しているものを呼び出す
 #定期実行
-name: jma-maxtemp-02-get-data-latest jma-maxtemp-03-update-latest-ranking
+name: jma-maxtemp-02-get-data-latest
 
 on:
   workflow_dispatch:
@@ -27,7 +29,7 @@ jobs:
         run: pip install pandas
         
       - name: Run jma-maxtemp-02-get-data-latest script
-        run: python jma-maxtemp-02-get-data-latest.py jma-maxtemp-03-update-latest-ranking.py
+        run: python jma-maxtemp-02-get-data-latest.py
         
       - name: Commit and push if content changed
         run: |-
