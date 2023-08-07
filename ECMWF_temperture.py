@@ -95,6 +95,7 @@ color_list = ['#00fff6',
 '#bb7874',
 '#c85552',
 '#d40000',
+'#880303',
 ]
 mycmap = mpl.colors.LinearSegmentedColormap.from_list('colormap_name', color_list)
 
