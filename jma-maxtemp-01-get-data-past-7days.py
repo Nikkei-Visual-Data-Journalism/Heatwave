@@ -76,6 +76,8 @@ past_table = pd.read_csv(filename)
 data_table = pd.concat([past_table,data_table])
 data_table['date'] = pd.to_datetime(data_table['date'])
 data_table['year'] = data_table['date'].dt.year
+cols = [col for col in data_table.columns if 'over' in col]
+data_table[cols] = data_table[cols].astype(int)
 data_table = data_table[~data_table.duplicated(subset=['date','pref'], keep='last')].reset_index(drop=True)
 ###出力
 data_table.to_csv(filename, index=False)
