@@ -7,6 +7,7 @@ from mpl_toolkits.basemap import Basemap
 import numpy as np
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import math
+import matplotlib as mpl
 
 
 client = Client("ecmwf", beta=True)
@@ -83,6 +84,20 @@ temperature_data = grib_file.select(name='Temperature')[0]
 lats, lons = temperature_data.latlons()
 temperature = temperature_data.values
 
+
+color_list = ['#00fff6',
+'#47f0e8',
+'#64e1d9',
+'#7ad0c9',
+'#8dbeb7',
+'#9eaaa4',
+'#ad938e',
+'#bb7874',
+'#c85552',
+'#d40000',
+]
+mycmap = mpl.colors.LinearSegmentedColormap.from_list('colormap_name', color_list)
+
 # 地図の範囲を設定
 lon_min, lon_max = lons.min(), lons.max()
 lat_min, lat_max = lats.min(), lats.max()
@@ -102,7 +117,7 @@ m.drawcoastlines()
 # 温度データをカラーマップでプロットします
 x, y = m(lons, lats)
 temperature_celsius = temperature - 273.15  # ケルビンを摂氏に変換
-plt.contourf(x, y, temperature_celsius, cmap='Reds', levels=20)
+plt.contourf(x, y, temperature_celsius, cmap=mycmap, levels=20)
 
 # カラーバー
 divider = make_axes_locatable(plt.gca())
