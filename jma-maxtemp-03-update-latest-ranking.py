@@ -30,19 +30,5 @@ rank_df.loc[rank_df.maxtemp > rank_df.max_value, '記録'] = '観測史上最高
 #
 rank_df = rank_df.rename(columns={'maxtemp':'最高気温'})
 rank_df = rank_df[['観測所番号','都道府県名','地名','最高気温','平年気温との差','記録']]
-#rank_df = rank_df.sort_values(by='最高気温', ascending=False)
 
-#Flourishのフィルター表示用
-#rank_df['項目'] = rank_df['都道府県名'].copy()
-#上位10
-#top10 = rank_df.head(10).copy()
-#top10['項目'] = '全国の上位10'
-#観測史上最高
-#record_high = rank_df[rank_df['記録'] == '観測史上最高'].copy()
-#record_high['項目'] = '観測史上最高を更新'
-#今年最高
-#year_high = rank_df[rank_df['記録'] == '今年最高'].copy()
-#year_high['項目'] = '今年最高を更新'
-
-#rank_df = pd.concat([top10, record_high, year_high, rank_df])
 rank_df.to_csv('./data/maxtemp-ranking-latest.csv',index=False)

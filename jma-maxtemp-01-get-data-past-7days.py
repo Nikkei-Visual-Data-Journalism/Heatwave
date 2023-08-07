@@ -39,19 +39,14 @@ for d in range(1, 8):
     data_agg = pd.concat([data_agg, data])
 
 ###計算
-data_agg['over15'] = data_agg.maxtemp >= 15
-data_agg['over20'] = data_agg.maxtemp >= 20
-data_agg['over25'] = data_agg.maxtemp >= 25
 data_agg['over30'] = data_agg.maxtemp >= 30
 data_agg['over35'] = data_agg.maxtemp >= 35
 data_agg['over40'] = data_agg.maxtemp >= 40
-data_agg['over45'] = data_agg.maxtemp >= 45
-data_agg['over50'] = data_agg.maxtemp >= 50
 data_agg['total'] = 1
 data_agg['null_values'] = data_agg.maxtemp.isna()
 
 #集計df
-heat_points_7days = data_agg.groupby(['date'])[['over15','over20','over25','over30','over35','over40','over45','over50','total','null_values']].sum().reset_index()
+heat_points_7days = data_agg.groupby(['date'])[['over30','over35','over40','total','null_values']].sum().reset_index()
 
 #過去分と統合
 filename = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-ts.csv"
