@@ -75,7 +75,9 @@ past_table = pd.read_csv(filename)
 data_table = pd.concat([past_table, data_table])
 data_table.date = pd.to_datetime(data_table.date)
 data_table['year'] = data_table['date'].dt.year
-data_table = data_table[~data_table.duplicated(subset=['date','pref'],keep='last')].reset_index(drop=True)
+data_table = data_table[~data_table.duplicated(subset=['date','pref'],keep='last')]
+data_table['sort_n'] = data_table.pref.map(points.set_index('pref').prec_no.to_dict())
+data_table = data_table.sort_values(by=['date','sort_n']).drop(['sort_n'],axis=1).reset_index(drop=True)
 ##出力
 data_table.to_csv(filename, index=False)
 
