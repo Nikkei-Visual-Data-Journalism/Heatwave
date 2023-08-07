@@ -69,13 +69,13 @@ data_table = data.groupby(['date','pref'])[['maxtemp','over30','over35','over40'
 data_table_cap = data[data.capitol==1].set_index(['date','pref'])[['maxtemp','over30','over35','over40']].add_suffix('_capitol')
 data_table = pd.concat([data_table, data_table_cap],axis=1).reset_index()
 ##過去分
-filename = './data-maxtemp/timeseries-data/jma-maxtemp-table-ts.csv'
+filename = "./data-maxtemp/timeseries-data/jma-maxtemp-temp-by-pref-ts.csv"
 past_table = pd.read_csv(filename)
 ##統合
 data_table = pd.concat([past_table, data_table])
 data_table.date = pd.to_datetime(data_table.date)
 data_table['year'] = data_table['date'].dt.year
-data_table = data_table[~data_table.duplicated(subset=['date','pref'],keep='last')]
+data_table = data_table[~data_table.duplicated(subset=['date','pref'],keep='last')].reset_index(drop=True)
 ##出力
 data_table.to_csv(filename, index=False)
 
