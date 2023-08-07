@@ -108,19 +108,14 @@ for key, val in temps.items():
     flourish = pd.concat([flourish, temp_df])
 flourish = flourish.reset_index(drop=False)
 flourish['year'] = flourish['year'].astype(int)
-flourish['きょう時点'] = flourish.heatpoints_ytd
-flourish['きょう以降の期間'] = flourish.heatpoints - flourish.heatpoints_ytd
+flourish[f"{yyyymmdd_dt.strftime('%-m月%-d日')}時点"] = flourish.heatpoints_capitol_ytd
+flourish['残りの期間'] = flourish.heatpoints_capitol - flourish.heatpoints_capitol_ytd
 filename_f = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-by-pref-flourish.csv"
 flourish.to_csv(filename_f,index=False)
 
 ##県別一覧を出力
 data_table = data_table.drop(['sort_n'],axis=1)
 data_table.to_csv(filename, index=False)
-
-
-
-
-
 
 #集計3: 最高気温の表
 ##最新分のみで計算
