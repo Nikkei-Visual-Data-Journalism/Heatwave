@@ -78,6 +78,9 @@ data_table['year'] = data_table['date'].dt.year
 data_table = data_table[~data_table.duplicated(subset=['date','pref'],keep='last')]
 data_table['sort_n'] = data_table.pref.map(points.set_index('pref').prec_no.to_dict())
 data_table = data_table.sort_values(by=['date','sort_n']).drop(['sort_n'],axis=1).reset_index(drop=True)
+#True/False-->1/0に
+cols = [col for col in data_table.columns if 'over' in col]
+data_table[cols] = data_table[cols].astype(int)
 ##出力
 data_table.to_csv(filename, index=False)
 
