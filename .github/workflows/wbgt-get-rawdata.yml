@@ -1,0 +1,32 @@
+#環境庁「暑さ指数」の元データを取得する
+#元データは毎時30分ごろ更新
+#コードは毎時45分に回す
+name: Run wbgt-get-rawdata
+
+on:
+  schedule:
+    # Run at the 40th minute of every hour
+    - cron: '45 * * * *'
+
+jobs:
+  retrieve-data:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Make script executable
+      run: chmod +x wbgt-get-data.sh
+
+    - name: Run data retrieval script
+      run: ./wbgt-get-raw-data.sh
+
+    # Optional: Commit and push the downloaded file back to the repository
+    - name: Commit and push changes
+      run: |
+        git config user.name "GitHub Action"
+        git config user.email "github-action@example.com"
+        git add ./data-wbgt/wbgt_raw.csv
+        git commit -m "Automatically downloaded WBGT data"
+        git push
