@@ -1,9 +1,9 @@
 #熱中症の救急搬送患者数（総務省）
-#https://www.fdma.go.jp/disaster/heatstroke/post3.html
-#毎週火曜（夕方？）に週次データをPDFで発表
-
 #旧hot_weather
 #（他のコードもすべて猛暑関連で後から認識しにくいので変更）
+#ソース：消防庁
+#毎週火曜（夕方？）に週次データをPDFで発表
+#https://www.fdma.go.jp/disaster/heatstroke/post3.html
 
 import pandas as pd
 from datetime import datetime, date, timedelta
