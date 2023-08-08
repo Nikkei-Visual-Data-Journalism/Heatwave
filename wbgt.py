@@ -8,21 +8,31 @@
 import pandas as pd
 from datetime import datetime, date
 import requests
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 import io
+import http.client
+import ssl
 
 #実況値のデータを取得
 yyyymm = date.today().strftime('%Y%m')
-url = f'https://www.wbgt.env.go.jp/est15WG/dl/wbgt_all_{yyyymm}.csv'
+root_dir = "www.wbgt.env.go.jp"
+file_dir = f'/est15WG/dl/wbgt_all_{yyyymm}.csv'
 
 #データ元のサーバーのSSL、legacy renegotiationの問題でgithub上でエラーが起きるため
-# Suppress the InsecureRequestWarning
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+# Allow insecure renegotiation
+ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+ssl_context.options &= ~ssl.OP_NO_TLSv1
+ssl_context.options &= ~ssl.OP_NO_TLSv1_1
+ssl_context.options &= ~ssl.OP_NO_TLSv1_2
+ssl_context.options &= ~ssl.OP_NO_TLSv1_3
+ssl_context.check_hostname = False
+ssl_context.verify_mode = ssl.CERT_NONE
 
-s = requests.Session()
-r = s.get(url, verify=False) 
+conn = http.client.HTTPSConnection(root_dir, context=ssl_context)
+conn.request("GET", file_dir)
+response = conn.getresponse()
 
-wbgt = pd.read_csv(io.StringIO(r.text))
+data = response.read().decode()
+wbgt = pd.read_csv(io.StringIO(data))
 
 #日時データ整形
 wbgt.Time = wbgt.Time.str.replace('24:00','0:00')
