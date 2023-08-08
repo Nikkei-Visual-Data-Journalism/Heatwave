@@ -1,46 +1,27 @@
 #暑さ指数（旧hot_index）
+#2023/8/8 github actionsのエラー対応で改変
 #定期実行
 #ソース：環境省熱中症予防サイト
 #元データは毎時30分ごろ更新
+#Google sheetは毎時40分に更新
 #https://www.wbgt.env.go.jp/wbgt_data.php
-#2023/8/8 エラーが続いているので改変中・・・ローカルでは回せますがgithub上ではconfigurationの問題が残っています
 
 import pandas as pd
 from datetime import datetime, date
-import requests
-from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.poolmanager import PoolManager
-import ssl
-import io
 
 #実況値のデータを取得
-yyyymm = date.today().strftime('%Y%m')
-url = f'https://www.wbgt.env.go.jp/est15WG/dl/wbgt_all_{yyyymm}.csv'
+#yyyymm = date.today().strftime('%Y%m')
+#url = f'https://www.wbgt.env.go.jp/est15WG/dl/wbgt_all_{yyyymm}.csv'
 
-#データ元のサーバーのSSL、legacy renegotiationの問題でgithub上でエラーが起きるため
-
-# Suppress only the insecure request warning
-requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
-
-
-class InsecureHttpAdapter(HTTPAdapter):
-    def init_poolmanager(self, connections, maxsize, block=False):
-        self.poolmanager = PoolManager(
-            num_pools=connections,
-            maxsize=maxsize,
-            block=block,
-            ssl_version=ssl.PROTOCOL_TLS,
-        )
-
-session = requests.Session()
-session.mount('https://', InsecureHttpAdapter())
-response = session.get(url, verify=False)
-
-wbgt = pd.read_csv(io.StringIO(response.text))
+#サーバーのセキュリティ問題で退避
+#Google Sheetでいったん読ませてから再取得
+#シートURL：https://docs.google.com/spreadsheets/d/1etzKS27IqhpYoZ76-b2MfzZ9WN4b6rM27FeuCFfr4AY/
+url ='https://docs.google.com/spreadsheets/d/e/2PACX-1vT_O4q5tl_u_YR5JFoc-t30DiaAZotmFpxb9CxQCYTOIsfkjhzmdTkk8EQtmWDfiE9hfGZYkI7zjMDl/pub?gid=76579725&single=true&output=csv'
+wbgt = pd.read_csv(url)
 
 #日時データ整形
 wbgt.Time = wbgt.Time.str.replace('24:00','0:00')
-wbgt['date_dt'] = pd.to_datetime(wbgt.Date + ' ' + wbgt.Time, format='%Y/%m/%d %H:%M')
+wbgt['date_dt'] = pd.to_datetime(wbgt.Date + ' ' + wbgt.Time, format='%Y-%m-%d %H:%M')
 wbgt['date_popup']=wbgt.date_dt.dt.strftime('%-m月%-d日 %-H時時点')
 wbgt = wbgt.drop(['Date','Time'],axis=1)
 
@@ -84,3 +65,28 @@ def guideline(value):
 wbgt_latest['guideline'] = wbgt_latest.wbgt.apply(guideline)
 
 wbgt_latest.to_csv("./data/wbgt.csv", index=False)
+
+#SSL設定のコード、ローカルでは機能したがgithub上ではNG
+#データ元のサーバーのSSL、legacy renegotiationの問題でgithub上でエラー発生
+#import requests
+#from requests.adapters import HTTPAdapter
+#from requests.packages.urllib3.poolmanager import PoolManager
+#import ssl
+#import io
+# Suppress only the insecure request warning
+#requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
+
+#class InsecureHttpAdapter(HTTPAdapter):
+#    def init_poolmanager(self, connections, maxsize, block=False):
+#         self.poolmanager = PoolManager(
+#             num_pools=connections,
+#             maxsize=maxsize,
+#             block=block,
+#             ssl_version=ssl.PROTOCOL_TLS,
+#         )
+
+# session = requests.Session()
+# session.mount('https://', InsecureHttpAdapter())
+# response = session.get(url, verify=False)
+
+# wbgt = pd.read_csv(io.StringIO(response.text))
