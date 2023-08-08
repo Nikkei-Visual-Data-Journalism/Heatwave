@@ -28,7 +28,7 @@ def read_pdf(href):
     
     #PDFから表を取得
     dfs = tabula.read_pdf(url, stream=True, pages=1)
-    df = dfs[0]
+    df = dfs[0].reset_index(drop=True)
     
     #日付の列を探す
     for col in df.columns:
