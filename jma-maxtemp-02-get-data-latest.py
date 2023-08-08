@@ -63,6 +63,18 @@ heat_points = heat_points.dropna(subset='date').sort_values(by='date')
 ##出力
 heat_points.to_csv(filename, index=False)
 
+#Flourish用
+heat_points['year'] = heat_points['date'].dt.year
+heat_points['date_x_axis'] = heat_points['date'].apply(lambda x: x.replace(year=2000))
+heat_points['date_jp'] = heat_points['date'].dt.strftime('%Y年%-m月%-d日')
+heat_points_f = heat_points.set_index(['date','year','date_x_axis','date_jp'])[['over30','over35']].rename_axis('category',axis=1).stack().rename('heat_pointss')
+heat_points_f = heat_points_f.reset_index()
+#出力
+filename_f30 = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-over30-ts.csv"
+filename_f35 = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-over35-ts.csv"
+heat_points_f[heat_points_f.category=='over30'].to_csv(filename_f30, index=False)
+heat_points_f[heat_points_f.category=='over35'].to_csv(filename_f35, index=False)
+
 #集計2：真夏日・猛暑日の県別一覧表
 ##最新分
 data_table = data.groupby(['date','pref'])[['maxtemp','over30','over35','over40']].max()
