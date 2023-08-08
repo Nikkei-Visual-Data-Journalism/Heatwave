@@ -16,7 +16,7 @@ import re
 url = 'https://www.fdma.go.jp/disaster/heatstroke/post3.html'
 r = requests.get(url)
 text = r.text
-soup = BeautifulSoup(text)
+soup = BeautifulSoup(text, features="lxml")
 
 pattern = re.compile(r'.*heatstroke_sokuhouti.*\.pdf')
 href_list = [a['href'] for a in soup.select('div > a[href]') if pattern.match(a['href'])]
