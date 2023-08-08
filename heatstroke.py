@@ -1,14 +1,16 @@
 #熱中症の救急搬送患者数（総務省）
 #https://www.fdma.go.jp/disaster/heatstroke/post3.html
+#毎週火曜（夕方？）に週次データをPDFで発表
+
 #旧hot_weather
 #（他のコードもすべて猛暑関連で後から認識しにくいので変更）
 
+import pandas as pd
+from datetime import datetime, date, timedelta
 import tabula
 import requests
-import pandas as pd
 from bs4 import BeautifulSoup
 import re
-from datetime import datetime, date
 
 #PDFファイルのURLを取得
 url = 'https://www.fdma.go.jp/disaster/heatstroke/post3.html'
@@ -31,7 +33,7 @@ def read_pdf(href):
     #日付の列を探す
     for col in df.columns:
         try:
-            df[df[col].str.contains('日付', na=False)].index.to_list()[0]
+            idx = df[df[col].str.contains('日付', na=False)].index.to_list()[0]
             break
         except:
             pass
@@ -51,20 +53,32 @@ def read_pdf(href):
     data = data.reset_index().dropna(subset=['date'])
     return data
 
-heatstroke = pd.DataFrame()
-
-for href in set(href_list):
-    weekly_data = read_pdf(href)
-    heatstroke = pd.concat([heatstroke, weekly_data])
-
-#重複削除
-heatstroke = heatstroke[~heatstroke.duplicated(subset='date', keep='last')].set_index('date')
-#日付の隙間を埋める
-heatstroke = heatstroke.reindex(pd.date_range(heatstroke.index.min(), heatstroke.index.max()))
-heatstroke = heatstroke.rename_axis('date').reset_index()
-
+#過去分のデータを取得
 filepath = './data/heatstroke.csv'
-heatstroke.to_csv(filepath, index=False)
+heatstroke = pd.read_csv(filepath, parse_dates=['date'])
+#最終更新日
+date_latest = heatstroke.date.max() - timedelta(days=6)
+date_latest = int(date_latest.strftime('%Y%m%d'))
+#最終更新日以降のファイルURLのみ取得
+href_list = [href for href in href_list if int(re.search(r'(\d{8})\.pdf', href).group(1)) > date_latest]
+
+#追加があるときのみ
+if len(href_list)>0:
+    #追加分のデータ取得
+    for href in set(href_list):
+        weekly_data = read_pdf(href)
+        heatstroke = pd.concat([heatstroke, weekly_data])
+    #重複削除
+    heatstroke = heatstroke[~heatstroke.duplicated(subset='date', keep='last')].set_index('date')
+    #日付の隙間を埋める
+    heatstroke = heatstroke.reindex(pd.date_range(heatstroke.index.min(), heatstroke.index.max()))
+    heatstroke = heatstroke.rename_axis('date').reset_index()
+    print('Updated')
+else:
+    print('No updates')
+    pass
+           
+#heatstroke.to_csv(filepath, index=False)
 
 #### change log####
 #役所のPDFでカラムやインデックスを位置で決めうちするのはけっこう危険
