@@ -19,10 +19,9 @@ jobs:
     - name: Make script executable
       run: chmod +x wbgt-get-data.sh
 
-    - name: Run data retrieval script
-      run: ./wbgt-get-raw-data.sh
+    - name: Run wbgt-get-rawdata
+      run: ./wbgt-get-rawdata.sh
 
-    # Optional: Commit and push the downloaded file back to the repository
     - name: Commit and push changes
       run: |
         git config user.name "GitHub Action"
