@@ -73,7 +73,8 @@ filename = "./data-maxtemp/timeseries-data/jma-maxtemp-temp-by-pref-ts.csv"
 past_table = pd.read_csv(filename)
 ##統合
 data_table = pd.concat([past_table, data_table])
-data_table.date = pd.to_datetime(data_table.date)
+data_table['date'] = pd.to_datetime(data_table['date'], errors='coerce')
+data_table = data_table.dropna(subset=['date'])
 data_table['year'] = data_table['date'].dt.year
 data_table = data_table[~data_table.duplicated(subset=['date','pref'],keep='last')]
 data_table['sort_n'] = data_table.pref.map(points.set_index('pref').prec_no.to_dict())
