@@ -7,4 +7,5 @@ url="https://www.wbgt.env.go.jp/est15WG/dl/wbgt_all_$yyyymm.csv"
 file_path="./data-wbgt/wbgt_raw.csv"
 
 # Download the CSV file using curl
-curl -L $url -o $file_path
+#Ignore SSL Errors (Not Recommended)
+curl --insecure -L $url -o $file_path
