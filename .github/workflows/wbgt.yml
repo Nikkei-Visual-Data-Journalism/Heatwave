@@ -1,6 +1,10 @@
 #環境省「暑さ指数」の地図用データ更新
 ##元データは毎時30分ごろ更新
-##本コードは毎時40分ごろ運転
+##Google Sheetは毎時40分にデータ取得
+##本コードは毎時50分ごろ運転
+##環境省のサーバー設定が要因でgithub actionsではSSLセキュリティでエラーになる
+##元データ→いったんGoogle sheetにとりこむ→pythonで読む
+
 name: wbgt
 
 on:
@@ -8,8 +12,8 @@ on:
   schedule:
       #UTC5:30分ごとに実行
       #- cron: '*/60 * * * *'
-  #毎時40分に実行
-    - cron: '40 * * * *'
+  #毎時50分に実行
+    - cron: '50 * * * *'
 jobs:
   scrape:
     runs-on: ubuntu-latest
