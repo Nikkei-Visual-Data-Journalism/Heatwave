@@ -4,6 +4,7 @@
 name: Run wbgt-get-rawdata
 
 on:
+  workflow_dispatch:
   schedule:
     # Run at the 40th minute of every hour
     - cron: '45 * * * *'
