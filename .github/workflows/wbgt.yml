@@ -22,7 +22,7 @@ jobs:
           python-version: '3.9'
 
       - name: Install necessary Python packages
-        run: pip install pandas requests datetime
+        run: pip install pandas requests
         
       - name: Run wbgt script
         run: python wbgt.py
