@@ -1,111 +1,49 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
-import requests
-from bs4 import BeautifulSoup
-from tqdm import tqdm
+##世界の都市の気温変化のビジュアルを作成する
 import pandas as pd
-import time
 import altair as alt
-import numpy as np
 
+#import requests
+#from bs4 import BeautifulSoup
+#from tqdm import tqdm
+#import time
+#import numpy as np
 
-# In[2]:
+cities = {
+    'london': 'ロンドン',
+    'newyork': 'ニューヨーク', 
+    'paris': 'パリ', 
+    'tokyo': '東京', 
+    'beijing': '北京', 
+    'bangkok': 'バンコク', 
+    'newdelhi': 'ニューデリー', 
+    'sidney': 'シドニー', 
+    'sanpaulo': 'サンパウロ', 
+    'capetown': 'ケープタウン'
+    }
 
+#過去データ
+filepath = './data-world-cities/2m_temp_1950to1954.csv'
+df_past = pd.read_csv(filepath, index_col = 0)
+df_past = df_past.rename(columns=cities)
+df_past = df_past[cities.values()]
 
-df_past = pd.read_csv('2m_temp_1950to1954.csv', index_col = 0)
+#現在のデータ
+filepath = './data-world-cities/2m_temp_2019to2023.csv' 
+df_present = pd.read_csv(filepath, index_col = 0)
+df_present = df_present.rename(columns=cities)
+df_present = df_present[cities.values()]
 
-
-# In[3]:
-
-
-df_past
-
-
-# In[4]:
-
-
-df_present = pd.read_csv('2m_temp_2019to2023.csv', index_col = 0)
-
-
-# In[5]:
-
-
-df_present
-
-
-# In[6]:
-
-
-df_past = df_past.rename(columns={'london': 'ロンドン',
-                                  'newyork': 'ニューヨーク', 
-                                  'paris': 'パリ', 
-                                  'tokyo': '東京', 
-                                  'beijing': '北京', 
-                                  'bangkok': 'バンコク', 
-                                  'newdelhi': 'ニューデリー', 
-                                  'sidney': 'シドニー', 
-                                  'sanpaulo': 'サンパウロ', 
-                                  'capetown': 'ケープタウン', 
-                                  })
-
-
-# In[7]:
-
-
-df_past.columns
-
-
-# In[8]:
-
-
-df_past = df_past[['ロンドン', 'パリ', 'ニューヨーク', '東京', '北京', 'バンコク', 'ニューデリー', 'シドニー', 'サンパウロ', 'ケープタウン']]
-
-
-# In[9]:
-
-
-df_present = df_present.rename(columns={'london': 'ロンドン',
-                                  'newyork': 'ニューヨーク', 
-                                  'paris': 'パリ', 
-                                  'tokyo': '東京', 
-                                  'beijing': '北京', 
-                                  'bangkok': 'バンコク', 
-                                  'newdelhi': 'ニューデリー', 
-                                  'sidney': 'シドニー', 
-                                  'sanpaulo': 'サンパウロ', 
-                                  'capetown': 'ケープタウン', 
-                                  })
-
-
-# In[10]:
-
-
-df_present = df_present[['ロンドン', 'パリ', 'ニューヨーク', '東京', '北京', 'バンコク', 'ニューデリー', 'シドニー', 'サンパウロ', 'ケープタウン']]
-
-
-# In[12]:
-
-
+#描画
 #線を引き、過去と現在でopacityを変えている
-
-import altair as alt
-import pandas as pd
-import numpy as np
-
 #作成したチャート10個の搬入先
 charts = []
 
 # データの生成
-
-for i in ['ロンドン', 'ニューヨーク', 'パリ', '東京', '北京', 'バンコク', 'ニューデリー', 'シドニー', 'サンパウロ', 'ケープタウン']:
+for city in cities.values():
     
-    past = df_past.copy()[[i]]
+    past = df_past.copy()[[city]]
     past['time'] = 'past'
-    present = df_present.copy()[[i]]
+    present = df_present.copy()[[city]]
     present['time'] = 'present'
 
     data = pd.concat([past, present]).dropna()
@@ -116,10 +54,10 @@ for i in ['ロンドン', 'ニューヨーク', 'パリ', '東京', '北京', '�
         opacity = 0.2 if time == 'past' else 0.5
         
         chart_area = alt.Chart(data[data['time'] == time]).transform_density(
-            density=i,
-            as_=[i, 'density'],
+            density=city,
+            as_=[city, 'density'],
         ).mark_area(opacity=opacity).encode(
-            x=alt.X(f"{i}:Q", axis=alt.Axis(values = [-20, -10, 0, 10, 20, 30, 40]), scale=alt.Scale(domain=[-20, 50]), title=" (℃)"),
+            x=alt.X(f"{city}:Q", axis=alt.Axis(values = [-20, -10, 0, 10, 20, 30, 40]), scale=alt.Scale(domain=[-20, 50]), title=" (℃)"),
             y=alt.Y("density:Q", axis=None),
             color=alt.value(color),
         ).properties(
@@ -127,13 +65,12 @@ for i in ['ロンドン', 'ニューヨーク', 'パリ', '東京', '北京', '�
             height=80,
         )
 
-
     #境界線を黒でひく
         chart_line = alt.Chart(data[data['time'] == time]).transform_density(
-            density=i,
-            as_=[i, 'density'],
+            density=city,
+            as_=[city, 'density'],
         ).mark_line(color='black', size = 0.4).encode(
-            x=f"{i}:Q",
+            x=f"{city}:Q",
             y="density:Q",
             color = alt.value('black')
         )
@@ -147,7 +84,7 @@ for i in ['ロンドン', 'ニューヨーク', 'パリ', '東京', '北京', '�
         # 色の凡例を追加
         return (chart_past + chart_present).encode(
             color=alt.Color('time:N', legend=alt.Legend(title="Time Period"))
-        ).properties(title=i)
+        ).properties(title=city)
 
 # 10個のチャートを作成
     charts.append(create_combined_chart(data))
@@ -159,4 +96,3 @@ row2 = alt.hconcat(*charts[5:])  # 残りの5つのチャートを水平に並�
 final_chart = alt.vconcat(row1, row2)  # 2行のチャートを垂直に並べる
 
 final_chart
-
