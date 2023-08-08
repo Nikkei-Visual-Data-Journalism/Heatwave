@@ -8,31 +8,30 @@
 import pandas as pd
 from datetime import datetime, date
 import requests
-import io
-import http.client
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.poolmanager import PoolManager
 import ssl
+import io
 
 #実況値のデータを取得
 yyyymm = date.today().strftime('%Y%m')
-root_dir = "www.wbgt.env.go.jp"
-file_dir = f'/est15WG/dl/wbgt_all_{yyyymm}.csv'
+url = f'https://www.wbgt.env.go.jp/est15WG/dl/wbgt_all_{yyyymm}.csv'
 
 #データ元のサーバーのSSL、legacy renegotiationの問題でgithub上でエラーが起きるため
-# Allow insecure renegotiation
-ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-ssl_context.options &= ~ssl.OP_NO_TLSv1
-ssl_context.options &= ~ssl.OP_NO_TLSv1_1
-ssl_context.options &= ~ssl.OP_NO_TLSv1_2
-ssl_context.options &= ~ssl.OP_NO_TLSv1_3
-ssl_context.check_hostname = False
-ssl_context.verify_mode = ssl.CERT_NONE
+class InsecureHttpAdapter(HTTPAdapter):
+    def init_poolmanager(self, connections, maxsize, block=False):
+        self.poolmanager = PoolManager(
+            num_pools=connections,
+            maxsize=maxsize,
+            block=block,
+            ssl_version=ssl.PROTOCOL_TLS,
+        )
 
-conn = http.client.HTTPSConnection(root_dir, context=ssl_context)
-conn.request("GET", file_dir)
-response = conn.getresponse()
+session = requests.Session()
+session.mount('https://', InsecureHttpAdapter())
+response = session.get(url, verify=False)
 
-data = response.read().decode()
-wbgt = pd.read_csv(io.StringIO(data))
+wbgt = pd.read_csv(io.StringIO(response.text))
 
 #日時データ整形
 wbgt.Time = wbgt.Time.str.replace('24:00','0:00')
