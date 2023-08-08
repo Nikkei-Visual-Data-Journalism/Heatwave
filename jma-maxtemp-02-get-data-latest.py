@@ -137,11 +137,8 @@ data_table.to_csv(filename, index=False)
 
 #集計3: 最高気温の表
 ##最新分のみで計算
-heinen = [col for col in data.columns if '平年' in col][0]
-rank_df = data[['date','観測所番号','pref','name','maxtemp',heinen]]
-rank_df = rank_df.rename(columns={'pref':'都道府県名','name':'地名','maxtemp':'最高気温',heinen:'平年差'})
-rank_df['平年差_pos'] = rank_df.where(rank_df['平年差']>0)['平年差'].fillna(0)
-rank_df['平年差_neg'] = rank_df.where(rank_df['平年差']<0)['平年差'].fillna(0)
+rank_df = data[['date','観測所番号','pref','name','maxtemp']]
+rank_df = rank_df.rename(columns={'pref':'都道府県名','name':'地名','maxtemp':'最高気温'})
 rank_df = rank_df.sort_values(by=['最高気温'],ascending=False)
 ##出力
 rank_df.to_csv('./data/maxtemp-ranking-latest.csv',index=False)
