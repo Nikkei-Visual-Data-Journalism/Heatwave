@@ -110,12 +110,12 @@ m.drawcoastlines()
 # 温度データをカラーマップでプロットします
 x, y = m(lons, lats)
 temperature_celsius = temperature - 273.15  # ケルビンを摂氏に変換
-plt.contourf(x, y, temperature_celsius, cmap=mycmap, levels=20)
+plt.contourf(x, y, temperature_celsius, cmap=mycmap, levels= 25)
 
 # カラーバー
 divider = make_axes_locatable(plt.gca())
 cax = divider.append_axes("right", size="0.000001%", pad=0.0000000000000000000000000001)
-plt.colorbar(orientation='horizontal', cmap=mycmap,label='°C')
+plt.colorbar(orientation='horizontal', cmap=mycmap, label='°C')
 
 # グリッドを表示
 m.drawparallels(np.arange(lat_min, lat_max), fontsize=0.1)
