@@ -8,6 +8,7 @@
 
 import pandas as pd
 from datetime import datetime, date
+import requests
 
 #実況値のデータを取得
 #yyyymm = date.today().strftime('%Y%m')
@@ -68,7 +69,6 @@ wbgt_latest.to_csv("./data/wbgt.csv", index=False)
 
 #SSL設定のコード、ローカルでは機能したがgithub上ではNG
 #データ元のサーバーのSSL、legacy renegotiationの問題でgithub上でエラー発生
-#import requests
 #from requests.adapters import HTTPAdapter
 #from requests.packages.urllib3.poolmanager import PoolManager
 #import ssl
