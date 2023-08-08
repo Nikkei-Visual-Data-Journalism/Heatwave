@@ -1,9 +1,11 @@
-name: hot_weather
+#熱中症による救急搬送者を取得する
+name: heatstroke
 on:
   workflow_dispatch:
   schedule:
-  #UTC5:05AM(日本時間午後2時05分)に実行
-    - cron: '5 5 * * *'
+  #UTC10時(日本時間の19時)に実行
+  #更新は週１回（火曜）だが、発表日がずれる可能性もあるので
+    - cron: '0 10 * * *'
 jobs:
   scrape:
     runs-on: ubuntu-latest
@@ -16,9 +18,9 @@ jobs:
         with:
           python-version: '3.9'
       - name: Install necessary Python packages
-        run: pip install pandas beautifulsoup4 requests tabula-py datetime lxml
-      - name: Run hot_weather script
-        run: python hot_weather.py
+        run: pip install pandas beautifulsoup4 requests tabula-py
+      - name: Run heatstroke script
+        run: python heatstroke.py
       - name: Commit and push if content changed
         run: |-
           git config user.name "Automated"
