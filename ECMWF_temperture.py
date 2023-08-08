@@ -86,18 +86,10 @@ temperature = temperature_data.values
 
 
 color_list = [
-'#1D19C3',
-'#197DC3',
-'#19C3C1',
-'#19C349',
-'#4DC319',
-'#C38519',
-'#C38519',
-'#C38519',
-'#C31975',
-'#C31923',
+'#E3E3E3', '#053061', '#2166ac', '#4393c3', '#EDED21', '#d6604d', '#b2182b', '#67001f'
 ]
 mycmap = mpl.colors.LinearSegmentedColormap.from_list('colormap_name', color_list)
+
 
 # 地図の範囲を設定
 lon_min, lon_max = lons.min(), lons.max()
@@ -122,8 +114,8 @@ plt.contourf(x, y, temperature_celsius, cmap=mycmap, levels=20)
 
 # カラーバー
 divider = make_axes_locatable(plt.gca())
-cax = divider.append_axes("right", size="5%", pad=0.1)
-plt.colorbar(cax=cax)
+cax = divider.append_axes("right", size="0.000001%", pad=0.0000000000000000000000000001)
+plt.colorbar(orientation='horizontal', cmap=mycmap)
 
 # グリッドを表示
 m.drawparallels(np.arange(lat_min, lat_max), fontsize=0.1)
