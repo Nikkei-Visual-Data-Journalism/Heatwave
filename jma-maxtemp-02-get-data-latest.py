@@ -110,6 +110,11 @@ flourish = flourish.reset_index(drop=False)
 flourish['year'] = flourish['year'].astype(int)
 flourish[f"{yyyymmdd_dt.strftime('%-m月%-d日')}時点"] = flourish.heatpoints_capitol_ytd
 flourish['残りの期間'] = flourish.heatpoints_capitol - flourish.heatpoints_capitol_ytd
+###東京都を一番上に表示
+flourish['sort_n'] = flourish.pref.map(points.set_index('pref').prec_no.to_dict())
+flourish.loc[flourish.pref=='東京都','sort_n'] = 1
+flourish = flourish.sort_values(by=['year','sort_n'])
+###Flourishを出力
 filename_f = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-by-pref-flourish.csv"
 flourish.to_csv(filename_f,index=False)
 
