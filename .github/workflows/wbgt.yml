@@ -1,10 +1,15 @@
-name: hot_index
+#環境省「暑さ指数」の地図用データ更新
+##元データは毎時30分ごろ更新
+##本コードは毎時40分ごろ運転
+name: wbgt
 
 on:
   workflow_dispatch:
-  #schedule:
-  #UTC5:30分ごとに実行
-    #- cron: '*/60 * * * *'
+  schedule:
+      #UTC5:30分ごとに実行
+      #- cron: '*/60 * * * *'
+  #毎時40分に実行
+    - cron: '40 * * * *'
 jobs:
   scrape:
     runs-on: ubuntu-latest
@@ -19,8 +24,8 @@ jobs:
       - name: Install necessary Python packages
         run: pip install pandas requests datetime
         
-      - name: Run world_temperature script
-        run: python hot_index.py
+      - name: Run wbgt script
+        run: python wbgt.py
         
       - name: Commit and push if content changed
         run: |-
