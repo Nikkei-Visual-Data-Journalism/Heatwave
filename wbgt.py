@@ -8,12 +8,21 @@
 import pandas as pd
 from datetime import datetime, date
 import requests
-
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+import io
 
 #実況値のデータを取得
 yyyymm = date.today().strftime('%Y%m')
 url = f'https://www.wbgt.env.go.jp/est15WG/dl/wbgt_all_{yyyymm}.csv'
-wbgt = pd.read_csv(url)
+
+#データ元のサーバーのSSL、legacy renegotiationの問題でgithub上でエラーが起きるため
+# Suppress the InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+s = requests.Session()
+r = s.get(url, verify=False) 
+
+wbgt = pd.read_csv(io.StringIO(r.text))
 
 #日時データ整形
 wbgt.Time = wbgt.Time.str.replace('24:00','0:00')
