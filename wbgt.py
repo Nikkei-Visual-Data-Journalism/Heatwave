@@ -3,7 +3,7 @@
 #ソース：環境省熱中症予防サイト
 #元データは毎時30分ごろ更新
 #https://www.wbgt.env.go.jp/wbgt_data.php
-#2023/8/8 エラーが続いていたので、コード手を入れました
+#2023/8/8 エラーが続いているので改変中・・・ローカルでは回せますがgithub上ではconfigurationの問題が残っています
 
 import pandas as pd
 from datetime import datetime, date
@@ -18,6 +18,11 @@ yyyymm = date.today().strftime('%Y%m')
 url = f'https://www.wbgt.env.go.jp/est15WG/dl/wbgt_all_{yyyymm}.csv'
 
 #データ元のサーバーのSSL、legacy renegotiationの問題でgithub上でエラーが起きるため
+
+# Suppress only the insecure request warning
+requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
+
+
 class InsecureHttpAdapter(HTTPAdapter):
     def init_poolmanager(self, connections, maxsize, block=False):
         self.poolmanager = PoolManager(
