@@ -17,7 +17,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Make script executable
-      run: chmod +x wbgt-get-data.sh
+      run: chmod +x wbgt-get-rawdata.sh
 
     - name: Run wbgt-get-rawdata
       run: ./wbgt-get-rawdata.sh
