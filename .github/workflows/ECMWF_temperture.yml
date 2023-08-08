@@ -10,6 +10,11 @@ jobs:
     steps:
       - name: Check out this repo
         uses: actions/checkout@v2
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # This fetches all history so you can handle merges if needed
       
       # Set up Python 3.9
       - name: Set up Python
