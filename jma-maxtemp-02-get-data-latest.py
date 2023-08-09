@@ -69,7 +69,7 @@ dates = pd.date_range(heatpoints.date.min(),heatpoints.date.max())
 dates = dates[dates.month.isin(range(5, 11))]
 heatpoints_f = heatpoints.set_index('date').reindex(dates).rename_axis('date')
 heatpoints_f['date_jp'] = heatpoints_f.index.strftime('%Y年%-m月%-d日')
-heatpoints_f['year'] = heatpoints_f.index.year
+heatpoints_f['year'] = heatpoints_f.index.strftime('%Y年')
 heatpoints_f = heatpoints_f.rename(columns={'over30':'真夏日','over35':'猛暑日','over40':'酷暑日'}).reset_index()
 heatpoints_f = heatpoints_f.sort_values(by=['year','date'], ascending=[False, True])
 #出力
