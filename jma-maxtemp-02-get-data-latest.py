@@ -113,17 +113,23 @@ by_pref_y.drop('sort_n', axis=1).to_csv(filename,index=False)
 #集計3: 年間＆前年同期の猛暑・真夏日をカウント(Flourish用に整形)
 over30 = by_pref_y.set_index(['year','pref','sort_n'])[['over30_capitol','over30_capitol_ytd']]
 over35 = by_pref_y.set_index(['year','pref','sort_n'])[['over35_capitol','over35_capitol_ytd']]
-over40 = by_pref_y.set_index(['year','pref','sort_n'])[['over40_capitol','over40_capitol_ytd']]
+#over40 = by_pref_y.set_index(['year','pref','sort_n'])[['over40_capitol','over40_capitol_ytd']]
+#count rest of the year
+over30.over30_capitol['over30_capitol_roy'] = over30.over30_capitol - over30.over30_capitol_ytd
+over35.over35_capitol['over35_capitol_roy'] = over35.over35_capitol - over35.over35_capitol_ytd
+#over40.over40_capitol['over40_capitol_roy'] = over40.over40_capitol - over40.over40_capitol_ytd
+
 over30['temp'] = '真夏日'
 over35['temp'] = '猛暑日'
-over40['temp'] = '酷暑日'
-by_pref_f = pd.concat([over30, over35, over40]).sort_index(axis=1).reset_index()
+#over40['temp'] = '酷暑日'
+#by_pref_f = pd.concat([over30, over35, over40]).sort_index(axis=1).reset_index()
+by_pref_f = pd.concat([over30, over35]).sort_index(axis=1).reset_index()
+
 #東京を上に表示する
 by_pref_f.loc[by_pref_f.pref=='東京都','sort_n'] = 1
 by_pref_f = by_pref_f.sort_values(by=['year','sort_n'])
 #年
 by_pref_f.year = by_pref_f.year.astype(int)
-by_pref_f = by_pref_f[by_pref_f.temp!='酷暑日']
 #出力
 filename = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-by-pref-flourish.csv"
 by_pref_f.to_csv(filename,index=False)
