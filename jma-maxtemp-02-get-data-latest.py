@@ -71,7 +71,7 @@ heatpoints_f = heatpoints.set_index('date').reindex(dates).rename_axis('date')
 heatpoints_f['date_jp'] = heatpoints_f.index.strftime('%Y年%-m月%-d日')
 heatpoints_f['year'] = heatpoints_f.index.year
 heatpoints_f = heatpoints_f.rename(columns={'over30':'真夏日','over35':'猛暑日','over40':'酷暑日'}).reset_index()
-heatpoints_F = heatpoints_f.sort_values(by=['year','date'], ascending=[False, True])
+heatpoints_f = heatpoints_f.sort_values(by=['year','date'], ascending=[False, True])
 #出力
 filename = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-flourish.csv"
 heatpoints_f.to_csv(filename, index=False)
