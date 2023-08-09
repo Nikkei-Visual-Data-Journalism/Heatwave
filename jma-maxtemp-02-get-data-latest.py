@@ -123,7 +123,7 @@ by_pref_f.loc[by_pref_f.pref=='東京都','sort_n'] = 1
 by_pref_f = by_pref_f.sort_values(by=['year','sort_n'])
 #年
 by_pref_f.year = by_pref_f.year.astype(int)
-by_temp_f = by_pref_f[by_pref_f.temp!='酷暑日']
+by_pref_f = by_pref_f[by_pref_f.temp!='酷暑日']
 #出力
 filename = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-by-pref-flourish.csv"
 by_pref_f.to_csv(filename,index=False)
