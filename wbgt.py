@@ -21,8 +21,8 @@ url ='https://docs.google.com/spreadsheets/d/e/2PACX-1vT_O4q5tl_u_YR5JFoc-t30Dia
 wbgt = pd.read_csv(url)
 
 #日時データ整形
-wbgt.Time = wbgt.Time.str.replace('24:00','0:00')
-wbgt['date_dt'] = pd.to_datetime(wbgt.Date + ' ' + wbgt.Time, format='%Y-%m-%d %H:%M')
+wbgt['Time'] = wbgt['Time'].str.replace('24:00','0:00')
+wbgt['date_dt'] = pd.to_datetime(wbgt['Date'] + ' ' + wbgt['Time'], format='%Y-%m-%d %H:%M')
 wbgt['date_popup']=wbgt.date_dt.dt.strftime('%-m月%-d日 %-H時時点')
 wbgt = wbgt.drop(['Date','Time'],axis=1)
 
