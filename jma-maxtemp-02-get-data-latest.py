@@ -123,7 +123,7 @@ by_pref_f.loc[by_pref_f.pref=='東京都','sort_n'] = 1
 by_pref_f = by_pref_f.sort_values(by=['year','sort_n'])
 #出力
 filename = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-by-pref-by_pref_flourish.csv"
-by_pref.to_csv(filename_f,index=False)
+by_pref.to_csv(filename,index=False)
 
 #集計4: 最高気温の表
 ##最新分のみで計算
