@@ -1,8 +1,9 @@
 #気象庁
-#①最新の最高気温のデータを取得
-#②集計１：真夏日・猛暑日の観測地点数（全国）＝過去データ統合して更新
-#③集計２：各都道府県の最高気温一覧＝過去データと統合して更新
-#④集計３：各観測地点のきょうの最高気温（直近のみ）＝最新データに更新
+#最新の最高気温のデータを取得
+#集計1：真夏日・猛暑日の観測地点数（全国）＝過去データ統合して更新
+#集計2：各都道府県の最高気温一覧＝過去データと統合して更新
+#集計3: 年間＆前年同期の猛暑・真夏日をカウント
+#集計4：各観測地点のきょうの最高気温（直近のみ）＝最新データに更新
 
 #https://www.data.jma.go.jp/stats/data/mdrr/docs/csv_dl_readme.html
 #最新は1時間毎の更新（毎時00分の観測データを50分過ぎに更新）
@@ -14,6 +15,7 @@ import pandas as pd
 #観測地点の一覧
 url = 'https://raw.githubusercontent.com/Nikkei-Visual-Data-Journalism/Heatwave/main/data-maxtemp/meta/points_list.csv'
 points = pd.read_csv(url)
+points_dic = points.set_index('pref').prec_no.to_dict()
 
 #最新データの取得
 url = 'https://www.data.jma.go.jp/stats/data/mdrr/tem_rct/alltable/mxtemsadext00_rct.csv'
@@ -22,19 +24,18 @@ data = pd.read_csv(url, encoding='Shift-JIS')
 #日付
 yyyymmdd = f"{data['現在時刻(年)'][0]}{data.loc[0,['現在時刻(月)','現在時刻(日)']].apply(lambda x: str(x).zfill(2)).sum()}"
 yyyymmdd_dt = pd.to_datetime(yyyymmdd, format='%Y%m%d')
+data['date'] = yyyymmdd_dt
 
 #最新データをcsvで出力
 ##ファイル名
 filename = f"./data-maxtemp/daily-data/jma-maxtemp-{yyyymmdd}.csv"
-##記載
-data['date'] = yyyymmdd_dt
-##csv
 data.to_csv(filename, index=False)
 data.to_csv("./data-maxtemp/daily-data/jma-maxtemp-latest.csv")
 
 #真夏日・猛暑日の数をかぞえる
 rename_dic = {col:'maxtemp' for col in data.columns if '最高気温(℃)' in col}
 data = data.rename(columns=rename_dic)
+data.maxtemp = data.maxtemp.astype(float)
 
 #計算（集計1, 2共通）
 data['over30'] = data.maxtemp >= 30
@@ -45,8 +46,10 @@ data['null_values'] = data.maxtemp.isna()
 #追加データ（集計2用）
 data['pref'] = data['観測所番号'].map(points.set_index(['観測所番号']).pref.to_dict())
 data['capitol'] = data['観測所番号'].isin(points[points.capitol==1]['観測所番号']).astype(int)
+data['year'] = data.date.dt.year
 #追加データ（集計3用）
 data['name'] = data['観測所番号'].map(points.set_index('観測所番号').name.to_dict())
+
 
 #集計1: 猛暑・真夏日の観測地点数（全国）
 ##最新分
@@ -63,7 +66,7 @@ heatpoints = heatpoints.dropna(subset='date').sort_values(by='date')
 ##出力
 heatpoints.to_csv(filename, index=False)
 
-#Flourish用
+#集計1: 猛暑・真夏日の観測地点数（全国）、Flourish用
 #日付の抜け漏れを補正・カラム名など日本語に
 dates = pd.date_range(heatpoints.date.min(),heatpoints.date.max())
 dates = dates[dates.month.isin(range(5, 11))]
@@ -78,72 +81,58 @@ heatpoints_f.to_csv(filename, index=False)
 
 #集計2：真夏日・猛暑日の県別一覧表
 ##最新分
-data_table = data.groupby(['date','pref'])[['maxtemp','over30','over35','over40']].max()
-data_table_cap = data[data.capitol==1].set_index(['date','pref'])[['maxtemp','over30','over35','over40']].add_suffix('_capitol')
-data_table = pd.concat([data_table, data_table_cap],axis=1).reset_index()
+by_pref_cap = data[data.capitol==1].groupby(['date','year','pref'])[['maxtemp','over30','over35','over40']].max().add_suffix('_capitol')
+by_pref = data.groupby(['date','year','pref'])[['maxtemp','over30','over35','over40']].max()
+by_pref = pd.concat([by_pref, by_pref_cap],axis=1).reset_index()
 ##過去分
-filename = "./data-maxtemp/timeseries-data/jma-maxtemp-temp-by-pref-ts.csv"
-past_table = pd.read_csv(filename)
-##統合
-data_table = pd.concat([past_table, data_table])
-data_table['date'] = pd.to_datetime(data_table['date'], errors='coerce')
-data_table = data_table.dropna(subset=['date'])
-data_table['year'] = data_table['date'].dt.year
-data_table = data_table[~data_table.duplicated(subset=['date','pref'],keep='last')]
-data_table['sort_n'] = data_table.pref.map(points.set_index('pref').prec_no.to_dict())
-data_table = data_table.sort_values(by=['date','sort_n']).reset_index(drop=True)
-#True/False-->1/0に
-cols = [col for col in data_table.columns if 'over' in col]
-data_table[cols] = data_table[cols].astype(int)
+filename = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-by-pref-daily.csv"
+by_pref_prev = pd.read_csv(filename, parse_dates=['date'])
+#統合
+by_pref = pd.concat([by_pref_prev, by_pref]).dropna(subset=['date'])
+by_pref = by_pref[~by_pref.duplicated(subset=['date','pref'], keep='last')]
+by_pref.loc[:,'over30':] = by_pref.loc[:,'over30':].astype(bool)
+#出力
+by_pref.to_csv(filename, index=False)
 
-#集計2-2: 
-##年間＆前年同期の猛暑・真夏日をカウント
-data_table_fullyear = data_table.groupby(['year','pref','sort_n'])[cols].sum()
-data_table_ytd = data_table[data_table['date'].apply(lambda x: x.replace(year=2000))<=yyyymmdd_dt.replace(year=2000)]
-data_table_ytd = data_table_ytd.groupby(['year','pref','sort_n'])[cols].sum()
-data_table_y = pd.concat([data_table_fullyear, data_table_ytd.add_suffix('_ytd')],axis=1)
-data_table_y = data_table_y.sort_index(level=[0,2]).reset_index(level='sort_n', drop=True).reset_index()
+#集計3: 年間＆前年同期の猛暑・真夏日をカウント
+cols = ['over30','over30_capitol', 'over35', 'over35_capitol', 'over40','over40_capitol']
+by_pref['sort_n'] = by_pref.pref.map(points_dic)
+#年間
+by_pref_y = by_pref.groupby(['year','pref','sort_n'])[cols].sum()
+#前年同期
+by_pref_ytd = by_pref[by_pref['date'].apply(lambda x: x.replace(year=2000))<=yyyymmdd_dt.replace(year=2000)]
+by_pref_ytd = by_pref_ytd.groupby(['year','pref','sort_n'])[cols].sum().add_suffix('_ytd')
+#統合
+by_pref_y = pd.concat([by_pref_y, by_pref_ytd],axis=1)
+#並び順ソート
+by_pref_y = by_pref_y.sort_index(level=['year','sort_n']).reset_index()
 ##年間を出力
-filename_y = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-by-pref-ts.csv"
-data_table_y.to_csv(filename_y,index=False)
+filename = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-by-pref-yearly.csv"
+by_pref_y.drop('sort_n', axis=1).to_csv(filename,index=False)
 
-##Flourish用のバックデータを更新
-flourish = pd.DataFrame()
-temps = {30:'真夏日', 35:'猛暑日'}
-for key, val in temps.items():
-    temp_df = data_table_y.set_index(['year','pref'])[[col for col in data_table_y if str(key) in col]]
-    rename_dic = {
-        f'over{key}':'heatpoints',
-        f'over{key}_capitol':'heatpoints_capitol',
-        f'over{key}_ytd':'heatpoints_ytd',
-        f'over{key}_capitol_ytd':'heatpoints_capitol_ytd'
-    }
-    temp_df = temp_df.rename(columns=rename_dic)
-    temp_df['temp'] = val
-    flourish = pd.concat([flourish, temp_df])
-flourish = flourish.reset_index(drop=False)
-flourish['year'] = flourish['year'].astype(int)
-flourish[f"{yyyymmdd_dt.strftime('%-m月%-d日')}時点"] = flourish.heatpoints_capitol_ytd
-flourish['残りの期間'] = flourish.heatpoints_capitol - flourish.heatpoints_capitol_ytd
-###東京都を一番上に表示
-flourish['sort_n'] = flourish.pref.map(points.set_index('pref').prec_no.to_dict())
-flourish.loc[flourish.pref=='東京都','sort_n'] = 1
-flourish = flourish.sort_values(by=['year','sort_n'])
-###Flourishを出力
-filename_f = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-by-pref-flourish.csv"
-flourish.to_csv(filename_f,index=False)
+#集計3: 年間＆前年同期の猛暑・真夏日をカウント(Flourish用に整形)
+over30 = by_pref_y.set_index(['year','pref','sort_n'])[['over30_capitol','over30_capitol_ytd']]
+over35 = by_pref_y.set_index(['year','pref','sort_n'])[['over35_capitol','over35_capitol_ytd']]
+over40 = by_pref_y.set_index(['year','pref','sort_n'])[['over40_capitol','over40_capitol_ytd']]
+over30['temp'] = '真夏日'
+over35['temp'] = '猛暑日'
+over40['temp'] = '酷暑日'
+by_pref_f = pd.concat([over30, over35, over40]).sort_index(axis=1).reset_index()
+#東京を上に表示する
+by_pref_f.loc[by_pref_f.pref=='東京都','sort_n'] = 1
+by_pref_f = by_pref_f.sort_values(by=['year','sort_n'])
+#出力
+filename = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-by-pref-by_pref_flourish.csv"
+by_pref.to_csv(filename_f,index=False)
 
-##県別一覧を出力
-data_table = data_table.drop(['sort_n'],axis=1)
-data_table.to_csv(filename, index=False)
-
-#集計3: 最高気温の表
+#集計4: 最高気温の表
 ##最新分のみで計算
 rank_df = data[['date','観測所番号','pref','name','maxtemp']]
 rank_df = rank_df.rename(columns={'pref':'都道府県名','name':'地名','maxtemp':'最高気温'})
 rank_df = rank_df.sort_values(by=['最高気温'],ascending=False)
 ##出力
-rank_df.to_csv('./data/maxtemp-ranking-latest.csv',index=False)
+filename = './data/maxtemp-ranking-latest.csv'
+rank_df.to_csv(filename,index=False)
 
 #最終更新時刻を記録
 ##動的テキスト表示用（使えるかは未定）
