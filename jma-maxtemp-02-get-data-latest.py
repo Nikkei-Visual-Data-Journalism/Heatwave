@@ -73,7 +73,7 @@ heatpoints_f['year'] = heatpoints_f.index.year
 heatpoints_f = heatpoints_f.rename(columns={'over30':'真夏日','over35':'猛暑日','over40':'酷暑日'}).reset_index()
 heatpoints_F = heatpoints_f.sort_values(by=['year','date'], ascending=[False, True])
 #出力
-filename = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-flourish-ts.csv"
+filename = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-flourish.csv"
 heatpoints_f.to_csv(filename, index=False)
 
 #集計2：真夏日・猛暑日の県別一覧表
