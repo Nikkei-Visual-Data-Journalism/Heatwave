@@ -121,6 +121,8 @@ by_pref_f = pd.concat([over30, over35, over40]).sort_index(axis=1).reset_index()
 #東京を上に表示する
 by_pref_f.loc[by_pref_f.pref=='東京都','sort_n'] = 1
 by_pref_f = by_pref_f.sort_values(by=['year','sort_n'])
+#年
+by_pref_f.year = by_pref_f.year.astype(int).astype(str) + '年'
 #出力
 filename = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-by-pref-flourish.csv"
 by_pref_f.to_csv(filename,index=False)
