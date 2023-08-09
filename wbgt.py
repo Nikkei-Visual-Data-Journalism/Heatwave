@@ -66,36 +66,3 @@ def guideline(value):
 wbgt_latest['guideline'] = wbgt_latest.wbgt.apply(guideline)
 
 wbgt_latest.to_csv("./data/wbgt.csv", index=False)
-
-##### changelog ##################
-#SSL設定のコード、ローカルでは機能したがgithub上ではNG
-#データ元のサーバーのSSL、legacy renegotiationの問題でgithub上でエラー発生
-
-#####pythonでは難しい####
-#from requests.adapters import HTTPAdapter
-#from requests.packages.urllib3.poolmanager import PoolManager
-#import ssl
-#import io
-# Suppress only the insecure request warning
-#requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
-
-#class InsecureHttpAdapter(HTTPAdapter):
-#    def init_poolmanager(self, connections, maxsize, block=False):
-#         self.poolmanager = PoolManager(
-#             num_pools=connections,
-#             maxsize=maxsize,
-#             block=block,
-#             ssl_version=ssl.PROTOCOL_TLS,
-#         )
-# session = requests.Session()
-# session.mount('https://', InsecureHttpAdapter())
-# response = session.get(url, verify=False)
-# wbgt = pd.read_csv(io.StringIO(response.text))
-
-######curlでもNG#####
-# yyyymm=$(date +"%Y%m")
-# url="https://www.wbgt.env.go.jp/est15WG/dl/wbgt_all_$yyyymm.csv"
-
-# file_path="./data-wbgt/wbgt_raw.csv"
-# #Ignore SSL Errors (Not Recommended)
-# curl --insecure -L $url -o $file_path
