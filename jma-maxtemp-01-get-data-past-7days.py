@@ -70,7 +70,7 @@ data_table = data_agg.groupby(['date','pref'])[['maxtemp','over30','over35','ove
 data_table_cap = data_agg[data_agg.capitol==1].set_index(['date','pref'])[['maxtemp','over30','over35','over40']].add_suffix('_capitol')
 data_table = pd.concat([data_table, data_table_cap],axis=1).reset_index()
 ###過去分
-filename = "./data-maxtemp/timeseries-data/jma-maxtemp-temp-by-pref-ts.csv"
+filename = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-by-pref-daily.csv"
 past_table = pd.read_csv(filename)
 ###統合
 data_table = pd.concat([past_table,data_table])
