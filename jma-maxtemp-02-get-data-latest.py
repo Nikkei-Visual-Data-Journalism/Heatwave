@@ -115,9 +115,9 @@ over30 = by_pref_y.set_index(['year','pref','sort_n'])[['over30_capitol','over30
 over35 = by_pref_y.set_index(['year','pref','sort_n'])[['over35_capitol','over35_capitol_ytd']]
 #over40 = by_pref_y.set_index(['year','pref','sort_n'])[['over40_capitol','over40_capitol_ytd']]
 #count rest of the year
-over30.over30_capitol['over30_capitol_roy'] = over30.over30_capitol - over30.over30_capitol_ytd
-over35.over35_capitol['over35_capitol_roy'] = over35.over35_capitol - over35.over35_capitol_ytd
-#over40.over40_capitol['over40_capitol_roy'] = over40.over40_capitol - over40.over40_capitol_ytd
+over30['over30_capitol_roy'] = over30.over30_capitol - over30.over30_capitol_ytd
+over35['over35_capitol_roy'] = over35.over35_capitol - over35.over35_capitol_ytd
+#over40['over40_capitol_roy'] = over40.over40_capitol - over40.over40_capitol_ytd
 
 over30['temp'] = '真夏日'
 over35['temp'] = '猛暑日'
