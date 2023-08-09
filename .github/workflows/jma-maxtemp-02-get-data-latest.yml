@@ -20,6 +20,11 @@ jobs:
     steps:
       - name: Check out this repo
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Pull latest changes
+        run: git pull
+        
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
