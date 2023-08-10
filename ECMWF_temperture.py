@@ -78,7 +78,7 @@ mslp = grib_temperture[0].values
 flat_lats= np.ravel(lats)
 flat_lons= np.ravel(lons)
 
-temperature_data = grib_file.select(name='Temperature')[0]
+temperature_data = grib_file.select(name='Temperature')[1]
 lats, lons = temperature_data.latlons()
 temperature = temperature_data.values
 
