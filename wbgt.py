@@ -61,8 +61,10 @@ def guideline(value):
         return '厳重警戒'
     elif value >= 25:
         return '警戒'
-    else:
+    elif value >= 21:
         return '注意'
+    else:
+        return 'ほぼ安全'
 wbgt_latest['guideline'] = wbgt_latest.wbgt.apply(guideline)
 
 wbgt_latest.to_csv("./data/wbgt.csv", index=False)
