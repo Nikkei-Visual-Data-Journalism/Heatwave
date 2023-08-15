@@ -92,7 +92,7 @@ color_list = ['#e3e3e3', '#8090ab','#4e6990','#094575','#215f91','#367aad','#4a9
 mycmap = mpl.colors.LinearSegmentedColormap.from_list('colormap_name', color_list)
 
 #fig sizeを設定
-plt.figure(figsize=(36, 16))
+plt.figure(figsize=(30, 16))
 
 
 # 地図の範囲を設定
