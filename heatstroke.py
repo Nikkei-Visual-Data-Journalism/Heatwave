@@ -11,6 +11,7 @@ import tabula
 import requests
 from bs4 import BeautifulSoup
 import re
+import json
 
 #PDFファイルのURLを取得
 url = 'https://www.fdma.go.jp/disaster/heatstroke/post3.html'
@@ -56,16 +57,26 @@ def read_pdf(href):
 #過去分のデータを取得
 filepath = './data/heatstroke.csv'
 heatstroke = pd.read_csv(filepath, parse_dates=['date'])
-#最終更新日
-date_latest = heatstroke.date.max() - timedelta(days=6)
-date_latest = int(date_latest.strftime('%Y%m%d'))
-#最終更新日以降のファイルURLのみ取得
-href_list = [href for href in href_list if int(re.search(r'(\d{8})\.pdf', href).group(1)) > date_latest]
 
-#追加があるときのみ
-if len(href_list)>0:
+#20230807-2.pdfなどのイレギュラーがあったので修正
+#最終更新日
+#date_latest = heatstroke.date.max() - timedelta(days=6)
+#date_latest = int(date_latest.strftime('%Y%m%d'))
+#最終更新日以降のファイルURLのみ取得
+#filepath = './data/heatstroke-pdf-list.json'
+#href_list = [href for href in href_list if int(re.search(r'(\d{8})\.pdf', href).group(1)) > date_latest]
+
+#取得済み
+with open('./data/heatstroke-pdf-list.json', 'r') as file:
+    href_list_prev  = json.load(file)
+    
+#新規ファイルのhref    
+href_new = set(href_list) - set(href_list_prev)
+
+#新規の追加分があるときのみ
+if len(href_new)>0:
     #追加分のデータ取得
-    for href in set(href_list):
+    for href in href_new:
         weekly_data = read_pdf(href)
         heatstroke = pd.concat([heatstroke, weekly_data])
     #重複削除
@@ -77,8 +88,13 @@ if len(href_list)>0:
 else:
     print('No updates')
     pass
-           
-#heatstroke.to_csv(filepath, index=False)
+
+#出力
+#データ
+heatstroke.to_csv(filepath, index=False)
+#取得済みpdf
+with open('./data/heatstroke-pdf-list.json', 'w') as f:
+    json.dump(href_list, f)
 
 #### change log####
 #役所のPDFでカラムやインデックスを位置で決めうちするのはけっこう危険
