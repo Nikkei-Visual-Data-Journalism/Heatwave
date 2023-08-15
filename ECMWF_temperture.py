@@ -83,9 +83,9 @@ lats, lons = temperature_data.latlons()
 temperature = temperature_data.values
 
 
-color_list = [
-'#E3E3E3', '#053061', '#2166ac', '#4393c3', '#EDED21', '#d6604d', '#b2182b', '#67001f'
-]
+#color_list = ['#E3E3E3', '#053061', '#2166ac', '#4393c3', '#EDED21', '#d6604d', '#b2182b', '#67001f']
+color_list = ['#e3e3e3', '#8090ab','#4e6990','#094575','#215f91','#367aad','#4a97c9','#5FB4E6','#2bbdd0','#51c0a7','#6ebf91','#8ABD7D','#a4cf66','#CCDD44','#e4e22d','#FFE600','#ffcd00','#FFB500','#f79100','#ea6d10','#d9481c','#C31923','#6D0000','#d9481c','#F09192']
+
 mycmap = mpl.colors.LinearSegmentedColormap.from_list('colormap_name', color_list)
 
 
