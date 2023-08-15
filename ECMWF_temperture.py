@@ -92,7 +92,7 @@ color_list = ['#e3e3e3', '#8090ab','#4e6990','#094575','#215f91','#367aad','#4a9
 mycmap = mpl.colors.LinearSegmentedColormap.from_list('colormap_name', color_list)
 
 #fig sizeを設定
-plt.figure(figsize=(40, 16))
+plt.figure(figsize=(48, 16))
 
 
 # 地図の範囲を設定
@@ -127,7 +127,7 @@ m.drawparallels(np.arange(lat_min, lat_max), fontsize=0.1)
 
 #追加
 #ビジュアル周辺の余白を小さく
-plt.subplots_adjust(top=0.001, bottom=0) 
+plt.subplots_adjust(top=0.001, bottom=0, left=0, right=0.001) 
 plt.tight_layout()
 
 
