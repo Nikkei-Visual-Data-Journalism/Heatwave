@@ -122,6 +122,10 @@ cax = divider.append_axes("right", size="0.000001%", pad=0.000000000000000000000
 m.drawparallels(np.arange(lat_min, lat_max), fontsize=0.1)
 #m.drawmeridians(np.arange(lon_min, lon_max, 10.), labels=[0, 0, 0, 1], fontsize=10)
 
+#ビジュアル周辺の余白を小さく
+plt.tight_layout()
+
+#出力
 plt.savefig('./img/ECMWF_temperture.png')
 
 
