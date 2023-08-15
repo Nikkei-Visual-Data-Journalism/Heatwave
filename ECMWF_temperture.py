@@ -85,11 +85,14 @@ temperature_data = grib_file.select(name='Temperature')[1]
 lats, lons = temperature_data.latlons()
 temperature = temperature_data.values
 
-
+#カラーマップを設定
 #color_list = ['#E3E3E3', '#053061', '#2166ac', '#4393c3', '#EDED21', '#d6604d', '#b2182b', '#67001f']
 color_list = ['#e3e3e3', '#8090ab','#4e6990','#094575','#215f91','#367aad','#4a97c9','#5FB4E6','#2bbdd0','#51c0a7','#6ebf91','#8ABD7D','#a4cf66','#CCDD44','#e4e22d','#FFE600','#ffcd00','#FFB500','#f79100','#ea6d10','#d9481c','#C31923','#6D0000','#d9481c','#F09192']
 
 mycmap = mpl.colors.LinearSegmentedColormap.from_list('colormap_name', color_list)
+
+#fig sizeを設定
+plt.figure(figsize=(48, 16))
 
 
 # 地図の範囲を設定
@@ -122,8 +125,11 @@ cax = divider.append_axes("right", size="0.000001%", pad=0.000000000000000000000
 m.drawparallels(np.arange(lat_min, lat_max), fontsize=0.1)
 #m.drawmeridians(np.arange(lon_min, lon_max, 10.), labels=[0, 0, 0, 1], fontsize=10)
 
+#追加
 #ビジュアル周辺の余白を小さく
+plt.subplots_adjust(top=0.001, bottom=0) 
 plt.tight_layout()
+
 
 #出力
 plt.savefig('./img/ECMWF_temperture.png')
