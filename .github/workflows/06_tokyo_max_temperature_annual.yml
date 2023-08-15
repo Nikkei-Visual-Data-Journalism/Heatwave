@@ -24,7 +24,7 @@ jobs:
           python-version: '3.9'
       #
       - name: Install necessary Python packages
-        run: pip install pandas beautifulsoup4 requests tabula-py ecmwf-data ecmwf-opendata magpye datetime lxml
+        run: pip install pandas beautifulsoup4 requests tabula-py datetime lxml
         
       # MAKE SURE YOUR SCRAPER FILENAME MATCHES THE FILENAME HERE!!
     
