@@ -4,11 +4,11 @@ name: 06_tokyo_max_temperature_annual
 # When does it get run?
 on:
   # workflow_dispatch means "I can click a button and force it to run"
-  workflow_dispatch:
+  #workflow_dispatch:
   # schedule/cron means "on a set schedule"
-  schedule:
+  #schedule:
   # 1時間おきに実行
-    - cron: '0 * * * *'
+  #  - cron: '0 * * * *'
 jobs:
   scrape:
     # For some reason, we run love versions of linux
