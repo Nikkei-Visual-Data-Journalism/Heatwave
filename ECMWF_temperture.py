@@ -1,3 +1,6 @@
+#ECMWF
+#https://charts.ecmwf.int/products/medium-z500-t850?base_time=202308141200&projection=opencharts_global&valid_time=202308141200
+
 import ecmwf.data as ecdata
 from magpye import GeoMap
 from ecmwf.opendata import Client
@@ -120,6 +123,7 @@ m.drawparallels(np.arange(lat_min, lat_max), fontsize=0.1)
 #m.drawmeridians(np.arange(lon_min, lon_max, 10.), labels=[0, 0, 0, 1], fontsize=10)
 
 plt.savefig('./img/ECMWF_temperture.png')
+
 
 
 #GeoMap()の()内で投影地域を変える。
