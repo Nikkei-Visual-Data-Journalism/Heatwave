@@ -39,7 +39,7 @@ jobs:
         
         #東京都の最高気温ヒストリカルデータ
       - name: Run tokyo-maxtemp-1963-latest
-        run: tokyo-maxtemp-1963-latest.py
+        run: python tokyo-maxtemp-1963-latest.py
       
       - name: Commit and push if content changed
         run: |-
