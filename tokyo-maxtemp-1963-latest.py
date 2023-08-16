@@ -43,4 +43,4 @@ tokyo.month_day = tokyo.date.dt.strftime('%m-%d')
 tokyo['month_day_flourish'] = tokyo.date.dt.strftime('%-m/%-d')
 
 # 保存
-tokyo.to_csv('./data-tokyo/tokyo_max_temp.csv')
+tokyo.to_csv('./data-tokyo/tokyo_max_temp.csv', index=False)
