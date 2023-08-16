@@ -11,6 +11,7 @@ import numpy as np
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import math
 import matplotlib as mpl
+import matplotlib.cm as cm
 
 
 client = Client("ecmwf", beta=True)
