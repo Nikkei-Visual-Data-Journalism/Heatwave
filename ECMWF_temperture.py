@@ -126,7 +126,7 @@ m.drawparallels(np.arange(lat_min, lat_max), fontsize=0.1)
 #m.drawmeridians(np.arange(lon_min, lon_max, 10.), labels=[0, 0, 0, 1], fontsize=10)
 
 #数値範囲
-cb.set_ticks(np.linspace(temperature_celsius.min(), 30, num=6)) 
+#cb.set_ticks(np.linspace(temperature_celsius.min(), 30, num=6)) 
 
 #追加
 #ビジュアル周辺の余白を小さく
