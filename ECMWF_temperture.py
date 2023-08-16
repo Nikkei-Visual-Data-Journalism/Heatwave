@@ -138,9 +138,9 @@ plt.savefig('./img/ECMWF_temperture.png')
 #cb.set_ticks(np.linspace(temperature_celsius.min(), 30, num=6))
 
 #カラーバー単体で出力
-fig_colorbar = plt.figure(figsize=(3, 1))
-cb = plt.colorbar(contour, orientation='horizontal', label='°C', cmap=mycmap)
-cb.ax.tick_params(labelsize=10)
+#fig_colorbar = plt.figure(figsize=(3, 1))
+#cb = plt.colorbar(contour, orientation='horizontal', label='°C', cmap=mycmap)
+#cb.ax.tick_params(labelsize=10)
 
 # カラーバー用の図を作成し、カラーバーをプロット
 fig_colorbar = plt.figure(figsize=(5, 1))
