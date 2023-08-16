@@ -115,7 +115,7 @@ m.drawcoastlines()
 # 温度データをカラーマップでプロットします
 x, y = m(lons, lats)
 temperature_celsius = temperature - 273.15  # ケルビンを摂氏に変換
-plt.contourf(x, y, temperature_celsius, cmap=mycmap, levels= 25)
+contour = plt.contourf(x, y, temperature_celsius, cmap=mycmap, levels=25)
 
 # カラーバー
 divider = make_axes_locatable(plt.gca())
