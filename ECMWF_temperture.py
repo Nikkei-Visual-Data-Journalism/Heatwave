@@ -121,21 +121,35 @@ divider = make_axes_locatable(plt.gca())
 cax = divider.append_axes("right", size="0.000001%", pad=0.0000000000000000000000000001)
 #plt.colorbar(orientation='horizontal', cmap=mycmap, label='°C')
 
-# グリッドを表示
-m.drawparallels(np.arange(lat_min, lat_max), fontsize=0.1)
-#m.drawmeridians(np.arange(lon_min, lon_max, 10.), labels=[0, 0, 0, 1], fontsize=10)
-
-#数値範囲
-#cb.set_ticks(np.linspace(temperature_celsius.min(), 30, num=6)) 
-
 #追加
 #ビジュアル周辺の余白を小さく
 plt.subplots_adjust(top=0.001, bottom=0, left=0, right=0.001) 
 plt.tight_layout()
 
-
 #出力
 plt.savefig('./img/ECMWF_temperture.png')
+
+# グリッドを表示
+#m.drawparallels(np.arange(lat_min, lat_max), fontsize=0.1)
+#m.drawmeridians(np.arange(lon_min, lon_max, 10.), labels=[0, 0, 0, 1], fontsize=10)
+
+#数値範囲
+#cb.set_ticks(np.linspace(temperature_celsius.min(), 30, num=6))
+
+#カラーバー単体で出力
+fig_colorbar = plt.figure(figsize=(3, 1))
+cb = plt.colorbar(contour, orientation='horizontal', label='°C', cmap=mycmap)
+cb.ax.tick_params(labelsize=10)
+
+# カラーバー用の図を作成し、カラーバーをプロット
+fig_colorbar = plt.figure(figsize=(5, 1))
+cb = plt.colorbar(contour, orientation='horizontal', label='°C', cax=fig_colorbar.add_axes([0.1, 0.1, 0.8, 0.8]), cmap=mycmap)
+cb.ax.tick_params(labelsize=10)
+
+
+fig_colorbar.savefig('./img/colorbar_figure.png')
+
+
 
 
 
