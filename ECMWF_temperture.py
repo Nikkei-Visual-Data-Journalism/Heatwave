@@ -143,7 +143,7 @@ plt.savefig('./img/ECMWF_temperture.png')
 #cb.ax.tick_params(labelsize=10)
 
 # カラーバー用の図を作成し、カラーバーをプロット
-fig_colorbar = plt.figure(figsize=(5, 0.5))
+fig_colorbar = plt.figure(figsize=(5, 0.4))
 cb = plt.colorbar(contour, orientation='horizontal', label='°C', cax=fig_colorbar.add_axes([0.1, 0.1, 0.8, 0.8]), cmap=mycmap)
 cb.ax.tick_params(labelsize=10)
 
