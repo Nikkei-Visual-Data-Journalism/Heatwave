@@ -148,7 +148,7 @@ cb = plt.colorbar(contour, orientation='horizontal', label='°C', cax=fig_colorb
 cb.ax.tick_params(labelsize=10)
 
 
-fig_colorbar.savefig('./img/colorbar_figure.png')
+fig_colorbar.savefig('./img/colorbar_figure.png', bbox_inches='tight')
 
 
 
