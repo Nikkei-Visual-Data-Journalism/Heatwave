@@ -50,6 +50,15 @@ data['year'] = data.date.dt.year
 #追加データ（集計3用）
 data['name'] = data['観測所番号'].map(points.set_index('観測所番号').name.to_dict())
 
+#地名修正（カッコが取れていなかったので＝後日大元のファイルで要修正）
+rename_dic = {
+    40336:'つくば',
+    92011:'南大東',
+    41166:'奥日光'
+}
+for key, val in rename_dic.items():
+    data.loc[data['観測所番号']==key,'name'] = val
+
 
 #集計1: 猛暑・真夏日の観測地点数（全国）
 ##最新分
