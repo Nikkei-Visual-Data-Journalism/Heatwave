@@ -17,7 +17,7 @@ import matplotlib.cm as cm
 client = Client("ecmwf", beta=True)
 
 parameters = ['gh', 't']
-filename = './img/medium-z500-t850.grib'
+filename = 'medium-z500-t850.grib'
 
 #dateで0を基準にマイナスをセットすると過去データとれる。最新データ
 client.retrieve(
