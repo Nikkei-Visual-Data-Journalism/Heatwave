@@ -22,7 +22,7 @@ filename = 'medium-z500-t850.grib'
 #dateで0を基準にマイナスをセットすると過去データとれる。最新データ
 client.retrieve(
     date=-1,
-    #time=0,
+    time=0,
     step=12,
     stream="oper",
     type="fc",
