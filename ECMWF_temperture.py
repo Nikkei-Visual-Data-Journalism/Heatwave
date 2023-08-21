@@ -27,7 +27,7 @@ client.retrieve(
     stream="oper",
     type="fc",
     levtype="pl",
-    levelist=[500,850],
+    levelist=[850],
     param=parameters,
     target=filename
 )
