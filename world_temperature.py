@@ -8,8 +8,9 @@ response = requests.get(url)
 data = response.json()
 
 #不要データをおとす
-##{'name': 'yyyy'}なので、年間データ以外の3行（1979-2000 mean, plus 2σ, minus 2σの集計）が除外される
-##iloc[:-3]より正確
+##{'name': 'yyyy'}なので、'name'に数字（'yyyy'）以外が入っているものを除外
+##これで末日にある年間データ以外の不要行（1979-2000 mean, plus 2σ, minus 2σの集計）が除外される
+##iloc[:-3]は不要行が末尾以外に移動／増減した場合にうまくいかなくなるのであらかじめ予防できるエラーは防ぐ
 data = [{**d} for d in data if d['name'].isdigit()]
 
 #jsonデータをdfに
