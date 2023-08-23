@@ -20,9 +20,6 @@
 ▼hot_weather.py(田中)
 救急搬送者数のデータ入手コード
 
-▼hot_index.py
-環境省の暑さ指数。github actionsがまわらない（0804）。コンテナにはflourish掲載済。flourishの自動更新はまだ。
-
 ▼city_temperature_visualize.py
 ftのdensity chartを模倣。元データは"2m_temp_1950to1954.csv"と”2m_temp_2019to2023.csv”。データ取得はコードは'data_cdsAPI_1950to1954'と'data_cdsAPI_2019to2023'。データ元はhttps://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land?tab=form
 
