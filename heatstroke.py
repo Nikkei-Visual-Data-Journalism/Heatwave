@@ -13,15 +13,17 @@ from bs4 import BeautifulSoup
 import re
 import json
 
-#PDFファイルのURLを取得
+#1) 週次のPDFファイルのURLを取得する
+##ポータルの中身をみる
 url = 'https://www.fdma.go.jp/disaster/heatstroke/post3.html'
 r = requests.get(url)
 text = r.text
 soup = BeautifulSoup(text, features="lxml")
-
+##pdfのURLをいったん全部リストに入れる
 pattern = re.compile(r'.*heatstroke_sokuhouti.*\.pdf')
 href_list = [a['href'] for a in soup.select('div > a[href]') if pattern.match(a['href'])]
 
+#2) pdfのURLから中身の表を取り出すファンクションを設定しておく
 def read_pdf(href):
     #URL
     parent_dir = 'https://www.fdma.go.jp'
@@ -47,14 +49,16 @@ def read_pdf(href):
     #カラム名
     df.columns = df.iloc[idx+1].to_list()
 
-    #「合計」の列を抜粋
+    #ほしいデータ＝「合計」の列を抜粋
     col_sum = [col for col in df.columns if '合計'in str(col)]
     data= df[col_sum].iloc[:,0].rename('熱中症患者数')
     data = pd.to_numeric(data.str.replace(',', ''), errors='coerce')
     data = data.reset_index().dropna(subset=['date'])
     return data
 
-#過去分のデータを取得
+###毎回全部のURLをループするのは時間／安定性の面でよくないので
+###過去分は蓄積しておき、新規分のみデータを取って積み上げる
+#3) 前回までのデータを取得
 filepath = './data/heatstroke.csv'
 heatstroke = pd.read_csv(filepath, parse_dates=['date'])
 
@@ -66,22 +70,24 @@ heatstroke = pd.read_csv(filepath, parse_dates=['date'])
 #filepath = './data/heatstroke-pdf-list.json'
 #href_list = [href for href in href_list if int(re.search(r'(\d{8})\.pdf', href).group(1)) > date_latest]
 
-#取得済み
+#4) 今回取得する必要のあるPDFのみデータを取得
+#前回までに取得済みのPDFのURL
 with open('./data/heatstroke-pdf-list.json', 'r') as file:
     href_list_prev  = json.load(file)
     
-#新規ファイルのhref    
-href_new = set(href_list) - set(href_list_prev)
+#今回取得する必要のあるPDFのURL    
+href_list_new = set(href_list) - set(href_list_prev)
 
+#今回分のデータを取得
 #新規の追加分があるときのみ
 if len(href_new)>0:
     #追加分のデータ取得
-    for href in href_new:
+    for href in href_list_new:
         weekly_data = read_pdf(href)
         heatstroke = pd.concat([heatstroke, weekly_data])
     #重複削除
     heatstroke = heatstroke[~heatstroke.duplicated(subset='date', keep='last')].set_index('date')
-    #日付の隙間を埋める
+    #日付の隙間を埋める（エラー防止）
     heatstroke = heatstroke.reindex(pd.date_range(heatstroke.index.min(), heatstroke.index.max()))
     heatstroke = heatstroke.rename_axis('date').reset_index()
     print('Updated')
@@ -92,11 +98,11 @@ else:
 #出力
 #データ
 heatstroke.to_csv(filepath, index=False)
-#取得済みpdf
+#取得済みPDFのURL
 with open('./data/heatstroke-pdf-list.json', 'w') as f:
     json.dump(href_list, f)
 
 #### change log####
 #役所のPDFでカラムやインデックスを位置で決めうちするのはけっこう危険
 #やや時間はかかりますが、列名などを特定して取得したほうがよいです
-#データは数値は数値、日付は日付できれいにしておく
+#データは数値は数値、日付は日付形式できれいにしておく
