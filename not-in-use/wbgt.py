@@ -17,7 +17,7 @@ wbgt = pd.read_csv(url)
 
 #日時データ整形
 wbgt['Time'] = wbgt['Time'].str.replace('24:00','0:00')
-wbgt['date_dt'] = pd.to_datetime(wbgt['Date'] + ' ' + wbgt['Time'], format='%Y-%m-%d %H:%M')
+wbgt['date_dt'] = pd.to_datetime(wbgt['Date'] + ' ' + wbgt['Time'], format='%Y/%m/%d %H:%M')
 wbgt['date_popup']=wbgt.date_dt.dt.strftime('%-m月%-d日 %-H時時点')
 wbgt = wbgt.drop(['Date','Time'],axis=1)
 
@@ -63,3 +63,7 @@ def guideline(value):
 wbgt_latest['guideline'] = wbgt_latest.wbgt.apply(guideline)
 
 wbgt_latest.to_csv("./data/wbgt.csv", index=False)
+
+import os
+current_directory = os.getcwd()
+print(current_directory)
