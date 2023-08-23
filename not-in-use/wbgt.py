@@ -1,6 +1,7 @@
 #暑さ指数（旧hot_index）
 
 #環境省のサーバーの問題で定期実行できないので使用していない
+#詳細はissue
 
 #ソース：環境省熱中症予防サイト
 #元データは毎時30分ごろ更新
@@ -62,8 +63,4 @@ def guideline(value):
         return 'ほぼ安全'
 wbgt_latest['guideline'] = wbgt_latest.wbgt.apply(guideline)
 
-wbgt_latest.to_csv("./data/wbgt.csv", index=False)
-
-import os
-current_directory = os.getcwd()
-print(current_directory)
+#wbgt_latest.to_csv("./data/wbgt.csv", index=False)
