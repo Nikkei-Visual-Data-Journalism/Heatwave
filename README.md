@@ -13,7 +13,7 @@
 |data|source|codes|output|更新頻度<br>source_data|更新頻度<br>workflow|visualization|note|
 | ---- | ---- | ---- | ---- | ---- |---- | ---- |---- |
 |世界の平均気温|[ClimeteReanalyzer/Daily 2-meter Air Temperature](https://climatereanalyzer.org/clim/t2_daily/)|[world_temperature.py](https://github.com/Nikkei-Visual-Data-Journalism/Heatwave/blob/main/world_temperature.py)|[world_temperature.csv](ここにURLを貼る)|毎日(UTC 5:00AM)|毎日1回(UTC 5:05)|Flourish<br>[世界の平均気温](https://public.flourish.studio/visualisation/14531196/)|@hiroki-sakuragi|
-|世界の上空気温（地図）|[ECMWF](https://charts.ecmwf.int/products/medium-z500-t850)|ECMWF_temperture.py|ECMWF_temperature.png|毎日2回(UTC 6:00, 18:00前後)|毎日2回(UTC 7:00, 19:00)|visualization|UTC 0:00, 12:00にHRESモデルの実行開始→およそ6時間後に反映|
+|世界の上空気温（地図）|[ECMWF](https://charts.ecmwf.int/products/medium-z500-t850)|[ECMWF_temperture.py](https://github.com/Nikkei-Visual-Data-Journalism/Heatwave/blob/main/ECMWF_temperture.py)|ECMWF_temperature.png|毎日2回(UTC 6:00, 18:00前後)|毎日2回(UTC 7:00, 19:00)|visualization|UTC 0:00, 12:00にHRESモデルの実行開始→およそ6時間後に反映|
 
   
 
