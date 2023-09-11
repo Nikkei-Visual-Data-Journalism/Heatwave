@@ -58,42 +58,29 @@ def read_pdf(href):
 
 ###毎回全部のURLをループするのは時間／安定性の面でよくないので
 ###過去分は蓄積しておき、新規分のみデータを取って積み上げる
-#3) 前回までのデータを取得
+#3) 前回までのデータ
 filepath = './data/heatstroke.csv'
 heatstroke = pd.read_csv(filepath, parse_dates=['date'])
 
-#20230807-2.pdfなどのイレギュラーがあったので修正
-#最終更新日
-#date_latest = heatstroke.date.max() - timedelta(days=6)
-#date_latest = int(date_latest.strftime('%Y%m%d'))
-#最終更新日以降のファイルURLのみ取得
-#filepath = './data/heatstroke-pdf-list.json'
-#href_list = [href for href in href_list if int(re.search(r'(\d{8})\.pdf', href).group(1)) > date_latest]
-
-#4) 今回取得する必要のあるPDFのみデータを取得
-#前回までに取得済みのPDFのURL
+#4)追加分のデータ取得
+#前回までに取得済みのURL
 with open('./data/heatstroke-pdf-list.json', 'r') as file:
-    href_list_prev  = json.load(file)
-    
-#今回取得する必要のあるPDFのURL    
+    href_list_prev  = json.load(file)   
+#新規の追加分URL
 href_list_new = set(href_list) - set(href_list_prev)
 
-#今回分のデータを取得
-#新規の追加分があるときのみ
-if len(href_new)>0:
-    #追加分のデータ取得
-    for href in href_list_new:
+#新規の追加分URLがあるときのみ
+for href in href_list_new:
+    try:
         weekly_data = read_pdf(href)
         heatstroke = pd.concat([heatstroke, weekly_data])
-    #重複削除
-    heatstroke = heatstroke[~heatstroke.duplicated(subset='date', keep='last')].set_index('date')
-    #日付の隙間を埋める（エラー防止）
-    heatstroke = heatstroke.reindex(pd.date_range(heatstroke.index.min(), heatstroke.index.max()))
-    heatstroke = heatstroke.rename_axis('date').reset_index()
-    print('Updated')
-else:
-    print('No updates')
-    pass
+    except:
+        pass
+#重複削除
+heatstroke = heatstroke[~heatstroke.duplicated(subset='date', keep='last')].set_index('date')
+#日付の隙間を埋める（エラー防止）
+heatstroke = heatstroke.reindex(pd.date_range(heatstroke.index.min(), heatstroke.index.max()))
+heatstroke = heatstroke.rename_axis('date').reset_index()
 
 #出力
 #データ
