@@ -51,8 +51,11 @@ def read_pdf(href):
 
     #ほしいデータ＝「合計」の列を抜粋
     col_sum = [col for col in df.columns if '合計'in str(col)]
-    data= df[col_sum].iloc[:,0].rename('熱中症患者数')
+    data= df[col_sum].iloc[:,0]
     data = pd.to_numeric(data.str.replace(',', ''), errors='coerce')
+    if data.dropna().shape[0]==0:
+        data = df.iloc[:,1].apply(lambda x: pd.to_numeric(str(x).split(' ')[-1].replace(',',''), errors='coerce'))
+    data = data.rename('熱中症患者数')
     data = data.reset_index().dropna(subset=['date'])
     return data
 
