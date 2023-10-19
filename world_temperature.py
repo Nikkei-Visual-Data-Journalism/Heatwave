@@ -3,7 +3,9 @@ import pandas as pd
 from datetime import datetime
 
 #データ取得
-url = 'https://climatereanalyzer.org/clim/t2_daily/json/cfsr_world_t2_day.json'
+#2023/10/19, URL変更（10/15以降取得できなかったため）・内容確認済み
+#url = 'https://climatereanalyzer.org/clim/t2_daily/json/cfsr_world_t2_day.json'
+url = 'https://climatereanalyzer.org/clim/t2_daily/json_cfsr/cfsr_world_t2_day.json'
 response = requests.get(url)
 data = response.json()
 
