@@ -8,6 +8,7 @@
 
 import pandas as pd
 import re
+from datetime import datetime
 
 #観測地点の一覧
 url = 'https://raw.githubusercontent.com/Nikkei-Visual-Data-Journalism/Heatwave/main/data-maxtemp/meta/points_list.csv'
@@ -15,13 +16,12 @@ points = pd.read_csv(url)
 
 #データを取得してファイル名に日付を入れて保存する
 def get_previous_data(d):
-    url = f'https://www.data.jma.go.jp/obd/stats/data/mdrr/tem_rct/alltable/mxtemsadext0{d}.csv'
+    #2023/10/31にURL変更
+    url = f'https://www.data.jma.go.jp/obd/stats/data/mdrr/tem_rct/alltable/mxtemsadext{d}.csv'
     data = pd.read_csv(url, encoding='Shift-JIS')
-
     #日付
     yyyymmdd = f"{data['観測時刻(年)'][0]}{data.loc[0,['観測時刻(月)','観測時刻(日)']].apply(lambda x: str(x).zfill(2)).sum()}"
     #ファイル名
-    
     filename = f"./data-maxtemp/daily-data/jma-maxtemp-{yyyymmdd}.csv"
     #dataにも記載
     data['date'] = pd.to_datetime(yyyymmdd, format='%Y%m%d')
@@ -31,9 +31,17 @@ def get_previous_data(d):
 
 #実行
 #集計（真夏・猛暑日を数える）
+#空のデータフレーム
 data_agg = pd.DataFrame()
+
+#日付リスト
+end_date = pd.to_datetime('today') - pd.Timedelta(days=1)
+start_date = end_date - pd.Timedelta(days=8)
+date_range = pd.date_range(start=start_date, end=end_date)
+date_range = date_range.strftime('%m%d').tolist()
+
 ###データ取得
-for d in range(1, 8): 
+for d in date_range:
     data = get_previous_data(d)
     ##ととのえる
     ##最高気温のデータのカラムを抽出
@@ -42,6 +50,7 @@ for d in range(1, 8):
     data = data.rename(columns=rename_dic)
     ##統合
     data_agg = pd.concat([data_agg, data])
+    print(d)
 
 ###計算（集計1, 2共通）
 data_agg['over30'] = data_agg.maxtemp >= 30
@@ -55,6 +64,7 @@ data_agg['capitol'] = data_agg['観測所番号'].isin(points[points.capitol==1]
 
 #【集計1】: 猛暑・真夏日の地点数の集計df（全国）
 heat_points_7days = data_agg.groupby(['date'])[['over30','over35','over40','total','null_values']].sum().reset_index()
+
 ###過去分と統合
 filename = "./data-maxtemp/timeseries-data/jma-maxtemp-heatpoints-ts.csv"
 ###過去分を取得
