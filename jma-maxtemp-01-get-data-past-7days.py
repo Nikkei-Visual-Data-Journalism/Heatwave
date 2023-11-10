@@ -36,7 +36,7 @@ data_agg = pd.DataFrame()
 
 #日付リスト
 end_date = pd.to_datetime('today') - pd.Timedelta(days=1)
-start_date = end_date - pd.Timedelta(days=8)
+start_date = end_date - pd.Timedelta(days=6)
 date_range = pd.date_range(start=start_date, end=end_date)
 date_range = date_range.strftime('%m%d').tolist()
 
